@@ -197,19 +197,24 @@ window.loadRecords = async () => {
     amt += r.amount;
 
     list.innerHTML += `
-    <div class="record">
-      <div class="row"><b>${r.date}</b> LR: ${r.lr}</div>
-      <div>${r.type} | ${r.from} → ${r.to}</div>
-      <div>Qty: ${r.qty} | ₹${r.amount}</div>
+<div class="record">
+  <div class="row"><b>${r.date}</b> LR: ${r.lr}</div>
+  <div>${r.type} | ${r.from} → ${r.to}</div>
+  <div>Qty: ${r.qty} | ₹${r.amount}</div>
 
-      <div class="actions">
-        <button onclick="toggle('${docSnap.id}', ${r.recorded})">
-          ${r.recorded ? "Recorded" : "Pending"}
-        </button>
-        <button onclick="edit('${docSnap.id}')">Edit</button>
-        <button onclick="del('${docSnap.id}')">Delete</button>
-      </div>
-    </div>`;
+  <div style="font-size:12px; color:gray;">
+    ${r.recorded && r.enteredDate ? "Recorded on: " + r.enteredDate : ""}
+  </div>
+
+  <div class="actions">
+    <button onclick="toggle('${docSnap.id}', ${r.recorded})">
+      ${r.recorded ? "Recorded" : "Pending"}
+    </button>
+    <button onclick="edit('${docSnap.id}')">Edit</button>
+    <button onclick="del('${docSnap.id}')">Delete</button>
+  </div>
+</div>
+`;
   });
 
   totalRecords(total, rec, amt);
@@ -224,11 +229,16 @@ function totalRecords(t,r,a){
 }
 
 // TOGGLE
-window.toggle = async (id,val)=>{
-  await updateDoc(doc(db,"records",id),{
-    recorded:!val,
-    enteredDate:new Date().toISOString()
+window.toggle = async (id, val) => {
+  const newStatus = !val;
+
+  await updateDoc(doc(db, "records", id), {
+    recorded: newStatus,
+    enteredDate: newStatus 
+      ? new Date().toLocaleString()  // readable date
+      : ""
   });
+
   loadRecords();
 };
 
