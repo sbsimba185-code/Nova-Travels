@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Parcel - Professional Logistics Management</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 900: '#1e3a8a' },
+                        accent: { 500: '#f97316', 600: '#ea580c' } // The signature orange
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f3f4f6; }
+        /* Hide scrollbar for clean look */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .page-content { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .page-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="text-gray-800 h-screen flex overflow-hidden font-sans">
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center transition-opacity duration-300">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-brand-600 mb-4"></div>
+        <h2 class="text-xl font-semibold text-gray-700">Loading Nova Parcel...</h2>
+    </div>
+    <!-- Desktop Sidebar -->
+    <aside class="hidden md:flex flex-col w-64 bg-brand-900 text-white shadow-xl z-20">
+        <div class="p-6 flex items-center gap-3 border-b border-brand-600/30">
+            <div class="bg-accent-500 text-white p-2 rounded-lg">
+                <i class="fa-solid fa-box-open text-xl"></i>
+            </div>
+            <h1 class="text-2xl font-bold tracking-wide">Nova Parcel</h1>
+        </div>
+        <nav class="flex-1 py-6 px-4 space-y-2">
+            <button onclick="navigate('home')" id="nav-desktop-home" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-white/10 text-left bg-white/10 font-semibold">
+                <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
+            </button>
+            <button onclick="navigate('add')" id="nav-desktop-add" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-white/10 text-left text-brand-100">
+                <i class="fa-solid fa-plus-circle w-5"></i> Add Record
+            </button>
+            <button onclick="navigate('view')" id="nav-desktop-view" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-white/10 text-left text-brand-100">
+                <i class="fa-solid fa-list w-5"></i> View Records
+            </button>
+            <button onclick="navigate('search')" id="nav-desktop-search" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-white/10 text-left text-brand-100">
+                <i class="fa-solid fa-magnifying-glass w-5"></i> Search & Filter
+            </button>
+        </nav>
+        <div class="p-4 border-t border-brand-600/30 text-xs text-brand-100/60 text-center">
+            &copy; 2026 Nova Logistics
+        </div>
+    </aside>
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col h-full relative overflow-hidden">
+        
+        <!-- Mobile Header -->
+        <header class="md:hidden bg-brand-900 text-white p-4 shadow-md flex items-center justify-between z-20">
+            <div class="flex items-center gap-2">
+                <div class="bg-accent-500 text-white p-1.5 rounded-md">
+                    <i class="fa-solid fa-box-open text-sm"></i>
+                </div>
+                <h1 class="text-xl font-bold">Nova Parcel</h1>
+            </div>
+            <div class="text-sm bg-white/20 px-3 py-1 rounded-full"><i class="fa-solid fa-user text-xs"></i> User</div>
+        </header>
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 pb-24 md:pb-8 no-scrollbar bg-gray-50" id="mainScroll">
+            
+            <!-- HOME PAGE -->
+            <div id="page-home" class="page-content active max-w-6xl mx-auto">
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Overview</h2>
+                        <p class="text-gray-500 mt-1">Real-time parcel statistics</p>
+                    </div>
+                    <button onclick="navigate('add')" class="hidden md:flex items-center gap-2 bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg shadow-md transition-colors">
+                        <i class="fa-solid fa-plus"></i> New Record
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <!-- Stat Card 1 -->
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-16 h-16 bg-blue-50 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                        <div class="text-blue-500 mb-2 relative z-10"><i class="fa-solid fa-cubes text-2xl"></i></div>
+                        <p class="text-sm text-gray-500 font-medium relative z-10">Total Parcels</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-1 relative z-10" id="stat-total">0</h3>
+                    </div>
+                    <!-- Stat Card 2 -->
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-16 h-16 bg-green-50 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                        <div class="text-green-500 mb-2 relative z-10"><i class="fa-solid fa-check-circle text-2xl"></i></div>
+                        <p class="text-sm text-gray-500 font-medium relative z-10">Recorded</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-1 relative z-10" id="stat-recorded">0</h3>
+                    </div>
+                    <!-- Stat Card 3 -->
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-16 h-16 bg-orange-50 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                        <div class="text-orange-500 mb-2 relative z-10"><i class="fa-solid fa-clock text-2xl"></i></div>
+                        <p class="text-sm text-gray-500 font-medium relative z-10">Pending</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-1 relative z-10" id="stat-pending">0</h3>
+                    </div>
+                    <!-- Stat Card 4 -->
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-16 h-16 bg-purple-50 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                        <div class="text-purple-500 mb-2 relative z-10"><i class="fa-solid fa-indian-rupee-sign text-2xl"></i></div>
+                        <p class="text-sm text-gray-500 font-medium relative z-10">Total Amount</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-1 relative z-10" id="stat-amount">0</h3>
+                    </div>
+                </div>
+                <div class="mt-8 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Recent Activity</h3>
+                        <button onclick="navigate('view')" class="text-brand-600 text-sm font-medium hover:underline">View All</button>
+                    </div>
+                    <div id="recent-list" class="space-y-3">
+                        <p class="text-gray-500 text-sm text-center py-4">Loading recent records...</p>
+                    </div>
+                </div>
+            </div>
+            <!-- ADD PAGE -->
+            <div id="page-add" class="page-content max-w-2xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Add New Record</h2>
+                <p class="text-gray-500 mb-6">Enter parcel tracking details below.</p>
+                
+                <form id="addForm" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                            <input type="date" id="add-date" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">LR Number</label>
+                            <input type="text" id="add-lr" required placeholder="e.g. LR-98273" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                        <select id="add-type" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-white">
+                            <option>Delivery</option>
+                            <option>Booking</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Origin (From)</label>
+                            <input type="text" id="add-from" required placeholder="City/Hub" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Destination (To)</label>
+                            <input type="text" id="add-to" required placeholder="City/Hub" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+                            <input type="number" id="add-qty" required min="1" placeholder="0" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Amount (â‚¹)</label>
+                            <input type="number" id="add-amount" required min="0" placeholder="0.00" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3.5 rounded-xl shadow-md transition-all flex justify-center items-center gap-2 mt-4">
+                        <i class="fa-solid fa-save"></i> Save Record
+                    </button>
+                </form>
+            </div>
+            <!-- VIEW / SEARCH PAGE (Combined for better UX) -->
+            <div id="page-view" class="page-content max-w-5xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-4">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">All Records</h2>
+                        <p class="text-gray-500 mt-1">Manage and track your parcels</p>
+                    </div>
+                    
+                    <!-- Quick Filters -->
+                    <div class="flex gap-2 w-full md:w-auto bg-white p-1.5 rounded-xl shadow-sm border border-gray-200">
+                        <button onclick="applyFilter('all')" id="filter-all" class="flex-1 md:flex-none px-4 py-1.5 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 transition-colors">All</button>
+                        <button onclick="applyFilter('pending')" id="filter-pending" class="flex-1 md:flex-none px-4 py-1.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">Pending</button>
+                        <button onclick="applyFilter('recorded')" id="filter-recorded" class="flex-1 md:flex-none px-4 py-1.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">Recorded</button>
+                    </div>
+                </div>
+                <!-- Advanced Search Toggle -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
+                    <div class="flex justify-between items-center cursor-pointer" onclick="document.getElementById('advSearch').classList.toggle('hidden')">
+                        <h3 class="font-medium text-gray-700 flex items-center gap-2"><i class="fa-solid fa-filter text-brand-500"></i> Advanced Search</h3>
+                        <i class="fa-solid fa-chevron-down text-gray-400"></i>
+                    </div>
+                    
+                    <div id="advSearch" class="hidden mt-4 pt-4 border-t border-gray-100 grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <input type="date" id="search-date" class="px-3 py-2 border rounded-lg text-sm outline-none focus:border-brand-500" placeholder="Date" oninput="runSearch()">
+                        <input type="text" id="search-lr" class="px-3 py-2 border rounded-lg text-sm outline-none focus:border-brand-500" placeholder="LR Number" oninput="runSearch()">
+                        <input type="text" id="search-from" class="px-3 py-2 border rounded-lg text-sm outline-none focus:border-brand-500" placeholder="From Location" oninput="runSearch()">
+                        <input type="text" id="search-to" class="px-3 py-2 border rounded-lg text-sm outline-none focus:border-brand-500" placeholder="To Location" oninput="runSearch()">
+                        <button onclick="clearSearch()" class="col-span-1 md:col-span-4 text-sm text-brand-600 hover:underline text-right">Clear Filters</button>
+                    </div>
+                </div>
+                <!-- List Container -->
+                <div id="records-list" class="space-y-4">
+                    <!-- Cards injected by JS -->
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Bottom Nav -->
+        <nav class="md:hidden fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around items-center pb-safe pt-2 pb-2 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-20">
+            <button onclick="navigate('home')" id="nav-mobile-home" class="flex flex-col items-center gap-1 p-2 text-brand-600 w-16">
+                <i class="fa-solid fa-chart-pie text-xl"></i>
+                <span class="text-[10px] font-medium">Home</span>
+            </button>
+            <button onclick="navigate('view')" id="nav-mobile-view" class="flex flex-col items-center gap-1 p-2 text-gray-400 w-16">
+                <i class="fa-solid fa-list text-xl"></i>
+                <span class="text-[10px] font-medium">Records</span>
+            </button>
+            <div class="relative -top-6">
+                <button onclick="navigate('add')" class="bg-accent-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-4 border-gray-50 hover:bg-accent-600 transition-transform active:scale-95">
+                    <i class="fa-solid fa-plus text-xl"></i>
+                </button>
+            </div>
+            <button onclick="navigate('search')" id="nav-mobile-search" class="flex flex-col items-center gap-1 p-2 text-gray-400 w-16">
+                <i class="fa-solid fa-search text-xl"></i>
+                <span class="text-[10px] font-medium">Search</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 p-2 text-gray-400 w-16">
+                <i class="fa-solid fa-user text-xl"></i>
+                <span class="text-[10px] font-medium">Profile</span>
+            </button>
+        </nav>
+    </main>
+    <!-- EDIT MODAL -->
+        <div id="editModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 hidden flex-col items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden transform transition-all scale-95 opacity-0" id="editModalContent">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                <h3 class="text-lg font-bold text-gray-800">Edit Record</h3>
+                <button onclick="closeModal('editModal')" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+                <input type="hidden" id="edit-id">
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Entry Date</label>
+                        <input type="date" id="edit-date" class="w-full px-4 py-2 border rounded-xl outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">LR Number</label>
+                        <input type="text" id="edit-lr" class="w-full px-4 py-2 border rounded-xl outline-none focus:border-brand-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">From</label>
+                        <input type="text" id="edit-from" class="w-full px-4 py-2 border rounded-xl outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
+                        <input type="text" id="edit-to" class="w-full px-4 py-2 border rounded-xl outline-none focus:border-brand-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+                        <input type="number" id="edit-qty" class="w-full px-4 py-2 border rounded-xl outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Amount (â‚¹)</label>
+                        <input type="number" id="edit-amount" class="w-full px-4 py-2 border rounded-xl outline-none focus:border-brand-500">
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex justify-end gap-3">
+                <button onclick="closeModal('editModal')" class="px-4 py-2 text-gray-600 font-medium hover:bg-gray-200 rounded-lg transition-colors">Cancel</button>
+                <button onclick="saveEdit()" class="px-4 py-2 bg-brand-600 text-white font-medium hover:bg-brand-700 rounded-lg shadow-sm transition-colors">Save Changes</button>
+            </div>
+        </div>
+        </div>
+    <!-- SELECT DATE MODAL -->
+<div id="recordDateModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 hidden flex-col items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden p-6 transform transition-all scale-95 opacity-0" id="recordDateModalContent">
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Select Recorded Date</h3>
+        <p class="text-gray-500 text-sm mb-4">On what date was this parcel recorded?</p>
+        <input type="hidden" id="record-id">
+        <input type="date" id="record-date-input" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-brand-500 mb-6">
+        <div class="flex gap-3">
+            <button onclick="closeModal('recordDateModal')" class="flex-1 py-2.5 bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 rounded-xl transition-colors">Cancel</button>
+            <button onclick="confirmRecordDate()" class="flex-1 py-2.5 bg-brand-600 text-white font-medium hover:bg-brand-700 rounded-xl shadow-sm transition-colors">Save Date</button>
+        </div>
+    </div>
+</div>
+  
+    <!-- DELETE CONFIRM MODAL -->
+    <div id="deleteModal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 hidden flex-col items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden text-center p-6 transform transition-all scale-95 opacity-0" id="deleteModalContent">
+            <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Delete Record?</h3>
+            <p class="text-gray-500 text-sm mb-6">This action cannot be undone. Are you sure you want to permanently delete this record?</p>
+            <input type="hidden" id="delete-id">
+            <div class="flex gap-3">
+                <button onclick="closeModal('deleteModal')" class="flex-1 py-2.5 bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 rounded-xl transition-colors">Cancel</button>
+                <button onclick="confirmDelete()" class="flex-1 py-2.5 bg-red-600 text-white font-medium hover:bg-red-700 rounded-xl shadow-sm transition-colors">Delete</button>
+            </div>
+        </div>
+    </div>
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-5 right-5 transform translate-x-[150%] transition-transform duration-300 bg-gray-800 text-white px-6 py-3 rounded-xl shadow-lg z-50 flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-green-400"></i>
+        <span id="toast-msg" class="text-sm font-medium">Success!</span>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // 1. Setup Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBMMZe-WtcdFCouYkqLa3o4JEL2H3rPAX8",
+            authDomain: "nova-8033b.firebaseapp.com",
+            projectId: "nova-8033b",
+            storageBucket: "nova-8033b.firebasestorage.app",
+            messagingSenderId: "1096950088497",
+            appId: "1:1096950088497:web:59d7f6f3c6bebec7faa610"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'nova-parcel-dev';
+        // State Variables
+        let currentUser = null;
+        let unsubscribe = null;
+        let allRecords = [];
+        let currentFilter = 'all'; // all, pending, recorded
+        // DOM Elements
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const recordsList = document.getElementById('records-list');
+        const recentList = document.getElementById('recent-list');
+        const addForm = document.getElementById('addForm');
+        // 2. Authentication Flow (MANDATORY BEFORE DB QUERIES)
+        const initAuth = async () => {
+            try {
+                await signInAnonymously(auth);
+            } catch (error) {
+                console.error("Auth error:", error);
+                showToast("Authentication failed", "error");
+            }
+        };
+        initAuth();
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                setupRealtimeListener();
+                setTimeout(() => {
+                    loadingOverlay.style.opacity = '0';
+                    setTimeout(() => loadingOverlay.style.display = 'none', 300);
+                }, 800);
+            }
+        });
+        // 3. Setup Realtime Listener
+        function setupRealtimeListener() {
+            if (!currentUser) return;
+            const recordsRef = collection(db, "records");
+            
+            if (unsubscribe) unsubscribe(); // Cleanup old listener
+            // We fetch all records and handle sorting/filtering in-memory to comply with "No Complex Queries" rule
+            unsubscribe = onSnapshot(recordsRef, (snap) => {
+                allRecords = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                // Sort by date descending in memory
+                allRecords.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                updateDashboardStats();
+                renderRecords();
+            }, (error) => {
+                console.error("Firestore error:", error);
+                showToast("Failed to load records", "error");
+            });
+        }
+        // 4. Update Dashboard Stats
+        function updateDashboardStats() {
+            const total = allRecords.length;
+            const recorded = allRecords.filter(r => r.recorded).length;
+            const pending = total - recorded;
+            const amount = allRecords.reduce((sum, r) => sum + (r.amount || 0), 0);
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-recorded').innerText = recorded;
+            document.getElementById('stat-pending').innerText = pending;
+            document.getElementById('stat-amount').innerText = amount.toLocaleString('en-IN');
+            // Update Recent List (last 3 items)
+            recentList.innerHTML = '';
+            if (total === 0) {
+                recentList.innerHTML = '<p class="text-gray-500 text-sm text-center py-4">No records yet. Add one to get started!</p>';
+                return;
+            }
+            allRecords.slice(0, 3).forEach(r => {
+                recentList.innerHTML += `
+                    <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-100 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center ${r.type === 'Delivery' ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'}">
+                                <i class="fa-solid ${r.type === 'Delivery' ? 'fa-truck' : 'fa-box'}"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-800">${r.lr} <span class="text-xs font-normal text-gray-500 ml-1">(${r.type})</span></h4>
+                                <p class="text-xs text-gray-500">${r.from} &rarr; ${r.to}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="block text-sm font-bold text-gray-800">â‚¹${r.amount}</span>
+                            <span class="text-[10px] font-medium px-2 py-0.5 rounded-full ${r.recorded ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}">${r.recorded ? 'Recorded' : 'Pending'}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        // 5. Render Records List with Filters
+        window.renderRecords = () => {
+            recordsList.innerHTML = '';
+            
+            // Apply Quick Filters
+            let filtered = allRecords;
+            if (currentFilter === 'pending') filtered = allRecords.filter(r => !r.recorded);
+            if (currentFilter === 'recorded') filtered = allRecords.filter(r => r.recorded);
+            // Apply Advanced Search Filters
+            const sDate = document.getElementById('search-date').value;
+            const sLr = document.getElementById('search-lr').value.toLowerCase();
+            const sFrom = document.getElementById('search-from').value.toLowerCase();
+            const sTo = document.getElementById('search-to').value.toLowerCase();
+            if (sDate) filtered = filtered.filter(r => r.date === sDate);
+            if (sLr) filtered = filtered.filter(r => r.lr.toLowerCase().includes(sLr));
+            if (sFrom) filtered = filtered.filter(r => r.from.toLowerCase().includes(sFrom));
+            if (sTo) filtered = filtered.filter(r => r.to.toLowerCase().includes(sTo));
+            if (filtered.length === 0) {
+                recordsList.innerHTML = `
+                    <div class="text-center py-12 bg-white rounded-2xl border border-gray-100 border-dashed">
+                        <div class="text-gray-300 mb-3"><i class="fa-solid fa-box-open text-4xl"></i></div>
+                        <h3 class="text-lg font-medium text-gray-800">No records found</h3>
+                        <p class="text-sm text-gray-500 mt-1">Try adjusting your search or add a new record.</p>
+                    </div>`;
+                return;
+            }
+            filtered.forEach(r => {
+                const dateObj = new Date(r.date);
+                const formattedDate = dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+                recordsList.innerHTML += `
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-all hover:shadow-md">
+                        <div class="flex-1 w-full">
+                            <div class="flex justify-between md:justify-start items-center gap-3 mb-2">
+                                <span class="bg-gray-100 text-gray-600 text-xs font-semibold px-2.5 py-1 rounded-md flex items-center gap-1"><i class="fa-regular fa-calendar text-[10px]"></i> ${formattedDate}</span>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${r.type === 'Delivery' ? 'bg-blue-50 text-blue-600' : 'bg-orange-50 text-orange-600'}">${r.type}</span>
+                                ${r.recorded && r.enteredDate ? `<span class="bg-green-50 border border-green-200 text-green-700 text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1 ml-auto md:ml-0"><i class="fa-solid fa-calendar-check"></i> Recorded: ${r.enteredDate}</span>` : ''}
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                                LR: ${r.lr}
+                                ${r.recorded ? '<i class="fa-solid fa-circle-check text-green-500 text-sm"></i>' : '<i class="fa-solid fa-circle-exclamation text-orange-400 text-sm"></i>'}
+                            </h3>
+                            
+                            <div class="flex items-center gap-2 text-gray-600 text-sm mt-2">
+                                <span class="font-medium bg-gray-50 px-2 py-1 rounded border border-gray-100">${r.from}</span>
+                                <i class="fa-solid fa-arrow-right-long text-gray-300"></i>
+                                <span class="font-medium bg-gray-50 px-2 py-1 rounded border border-gray-100">${r.to}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-row md:flex-col justify-between items-center md:items-end w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0 border-gray-100 gap-2">
+                            <div class="text-left md:text-right">
+                                <div class="text-sm text-gray-500">Qty: <span class="font-bold text-gray-700">${r.qty}</span></div>
+                                <div class="text-2xl font-bold text-brand-600">â‚¹${r.amount}</div>
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <button onclick="toggleRecord('${r.id}', ${r.recorded})" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors ${r.recorded ? 'bg-green-100 text-green-600 hover:bg-green-200' : 'bg-gray-100 text-gray-500 hover:bg-orange-100 hover:text-orange-500'}" title="Toggle Status">
+                                    <i class="fa-solid ${r.recorded ? 'fa-check' : 'fa-clock'}"></i>
+                                </button>
+                              
+                                <button onclick="openEditModal('${r.id}', '${r.date}', '${r.lr}', '${r.from}', '${r.to}', ${r.qty}, ${r.amount})" class="w-10 h-10 rounded-full flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors shadow-sm" title="Edit">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+
+                                <button onclick="openDeleteModal('${r.id}')" class="w-10 h-10 rounded-full flex items-center justify-center bg-red-50 text-red-500 hover:bg-red-100 transition-colors" title="Delete">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        };
+        // 6. Navigation Logic
+        window.navigate = (pageId) => {
+            // Content Toggle
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            const targetPage = pageId === 'search' ? 'view' : pageId; // Search points to view
+            document.getElementById(`page-${targetPage}`).classList.add('active');
+            
+            // If going to search, force open the advanced search panel
+            if (pageId === 'search') {
+                document.getElementById('advSearch').classList.remove('hidden');
+                document.getElementById('search-lr').focus();
+            }
+            // Scroll to top
+            document.getElementById('mainScroll').scrollTop = 0;
+            // Desktop Nav styling
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-white/10', 'font-semibold');
+                btn.classList.add('text-brand-100');
+            });
+            document.getElementById(`nav-desktop-${pageId}`).classList.add('bg-white/10', 'font-semibold');
+            document.getElementById(`nav-desktop-${pageId}`).classList.remove('text-brand-100');
+            // Mobile Nav styling
+            ['home', 'view', 'search'].forEach(id => {
+                const btn = document.getElementById(`nav-mobile-${id}`);
+                if (btn) {
+                    btn.classList.remove('text-brand-600');
+                    btn.classList.add('text-gray-400');
+                }
+            });
+            if(pageId !== 'add') {
+                 document.getElementById(`nav-mobile-${pageId}`).classList.add('text-brand-600');
+                 document.getElementById(`nav-mobile-${pageId}`).classList.remove('text-gray-400');
+            }
+        };
+        // 7. Add Form Submission
+        addForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) return;
+            const btn = addForm.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Saving...';
+            btn.disabled = true;
+            try {
+                const data = {
+                    date: document.getElementById('add-date').value,
+                    lr: document.getElementById('add-lr').value.trim(),
+                    type: document.getElementById('add-type').value,
+                    from: document.getElementById('add-from').value.trim(),
+                    to: document.getElementById('add-to').value.trim(),
+                    qty: Number(document.getElementById('add-qty').value),
+                    amount: Number(document.getElementById('add-amount').value),
+                    recorded: false,
+                    enteredDate: "",
+                    createdAt: new Date().toISOString()
+                };
+                await addDoc(collection(db, "records"), data);
+                
+                showToast("Record added successfully!");
+                addForm.reset();
+                navigate('view');
+            } catch (error) {
+                console.error("Error adding:", error);
+                showToast("Failed to add record", "error");
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-save"></i> Save Record';
+                btn.disabled = false;
+            }
+        });
+        // 8. CRUD Operations
+        window.toggleRecord = (id, currentState) => {
+    if (!currentState) {
+        // Opening the modal to ask for the date
+        document.getElementById('record-id').value = id;
+        document.getElementById('record-date-input').valueAsDate = new Date(); 
+        openModal('recordDateModal', 'recordDateModalContent');
+    } else {
+        // Marking as Pending: Instantly clear data
+        const record = allRecords.find(r => r.id === id);
+        if(record) {
+            record.recorded = false;
+            record.enteredDate = ""; // Clears the date
+            showToast("Marked as Pending");
+            updateDashboardStats();
+            renderRecords();
+        }
+    }
+};
+        window.confirmRecordDate = () => {
+    const id = document.getElementById('record-id').value;
+    const selectedDate = document.getElementById('record-date-input').value;
+    
+    if(!selectedDate) {
+        showToast("Please select a date", "error");
+        return;
+    }
+
+    const record = allRecords.find(r => r.id === id);
+    if(record) {
+        record.recorded = true;
+        
+        // Format the date neatly
+        const dateObj = new Date(selectedDate);
+        record.enteredDate = dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+        
+        closeModal('recordDateModal');
+        showToast("Marked as Recorded");
+        updateDashboardStats();
+        renderRecords();
+    }
+};
+      
+        // Modal Controls
+        window.openModal = (modalId, contentId) => {
+            const modal = document.getElementById(modalId);
+            const content = document.getElementById(contentId);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            // Small delay for transition
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        };
+        window.closeModal = (modalId) => {
+            const modal = document.getElementById(modalId);
+            const content = modal.children[0];
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 200); // match transition duration
+        };
+        window.openEditModal = (id, date, lr, from, to, qty, amount) => {
+    document.getElementById('edit-id').value = id;
+    document.getElementById('edit-date').value = date;
+    document.getElementById('edit-lr').value = lr;
+    document.getElementById('edit-from').value = from;
+    document.getElementById('edit-to').value = to;
+    document.getElementById('edit-qty').value = qty;
+    document.getElementById('edit-amount').value = amount;
+    openModal('editModal', 'editModalContent');
+};
+      
+        window.saveEdit = () => {
+    const id = document.getElementById('edit-id').value;
+    const date = document.getElementById('edit-date').value;
+    const lr = document.getElementById('edit-lr').value;
+    const from = document.getElementById('edit-from').value;
+    const to = document.getElementById('edit-to').value;
+    const qty = Number(document.getElementById('edit-qty').value);
+    const amount = Number(document.getElementById('edit-amount').value);
+
+    const record = allRecords.find(r => r.id === id);
+    if(record) {
+        // Update all the fields
+        record.date = date;
+        record.lr = lr;
+        record.from = from;
+        record.to = to;
+        record.qty = qty;
+        record.amount = amount;
+        
+        closeModal('editModal');
+        showToast("Record updated!");
+        updateDashboardStats();
+        renderRecords();
+    }
+};
+      
+        window.openDeleteModal = (id) => {
+            document.getElementById('delete-id').value = id;
+            openModal('deleteModal', 'deleteModalContent');
+        };
+        window.confirmDelete = async () => {
+            const id = document.getElementById('delete-id').value;
+            try {
+                await deleteDoc(doc(db, "records", id));
+                closeModal('deleteModal');
+                showToast("Record deleted");
+            } catch(e) { showToast("Failed to delete", "error"); }
+        };
+        // 9. Filtering logic
+        window.applyFilter = (type) => {
+            currentFilter = type;
+            
+            // Styling buttons
+            ['all', 'pending', 'recorded'].forEach(f => {
+                const btn = document.getElementById(`filter-${f}`);
+                if(f === type) {
+                    btn.className = "flex-1 md:flex-none px-4 py-1.5 rounded-lg text-sm font-medium bg-white shadow-sm text-gray-800 transition-colors";
+                } else {
+                    btn.className = "flex-1 md:flex-none px-4 py-1.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors";
+                }
+            });
+            renderRecords();
+        };
+        window.runSearch = () => { renderRecords(); };
+        window.clearSearch = () => {
+            document.getElementById('search-date').value = '';
+            document.getElementById('search-lr').value = '';
+            document.getElementById('search-from').value = '';
+            document.getElementById('search-to').value = '';
+            renderRecords();
+        };
+        // UI Helpers
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            
+            const icon = toast.querySelector('i');
+            if(type === 'error') {
+                icon.className = 'fa-solid fa-circle-exclamation text-red-400';
+            } else {
+                icon.className = 'fa-solid fa-circle-check text-green-400';
+            }
+            toast.classList.remove('translate-x-[150%]');
+            setTimeout(() => {
+                toast.classList.add('translate-x-[150%]');
+            }, 3000);
+        }
+        // Set default date in Add Form
+        document.getElementById('add-date').valueAsDate = new Date();
+    </script>
+</body>
+</html>
