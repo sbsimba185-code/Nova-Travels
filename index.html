@@ -571,45 +571,36 @@
             }
         });
         // 8. CRUD Operations
-        window.toggleRecord = (id, currentState) => {
-    if (!currentState) {
-        // Opening the modal to ask for the date
-        document.getElementById('record-id').value = id;
-        document.getElementById('record-date-input').valueAsDate = new Date(); 
-        openModal('recordDateModal', 'recordDateModalContent');
-    } else {
-        // Marking as Pending: Instantly clear data
-        const record = allRecords.find(r => r.id === id);
-        if(record) {
-            record.recorded = false;
-            record.enteredDate = ""; // Clears the date
-            showToast("Marked as Pending");
-            updateDashboardStats();
-            renderRecords();
-        }
-    }
-};
-        window.confirmRecordDate = () => {
+        
+        window.confirmRecordDate = async () => {
+
     const id = document.getElementById('record-id').value;
     const selectedDate = document.getElementById('record-date-input').value;
-    
-    if(!selectedDate) {
+
+    if (!selectedDate) {
         showToast("Please select a date", "error");
         return;
     }
 
-    const record = allRecords.find(r => r.id === id);
-    if(record) {
-        record.recorded = true;
-        
-        // Format the date neatly
+    try {
         const dateObj = new Date(selectedDate);
-        record.enteredDate = dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-        
+        const formattedDate = dateObj.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+
+        await updateDoc(doc(db, "records", id), {
+            recorded: true,
+            enteredDate: formattedDate
+        });
+
         closeModal('recordDateModal');
-        showToast("Marked as Recorded");
-        updateDashboardStats();
-        renderRecords();
+        showToast("Recorded successfully");
+
+    } catch (error) {
+        console.error(error);
+        showToast("Failed to update", "error");
     }
 };
       
@@ -626,7 +617,28 @@
             }, 10);
         };
         window.closeModal = (modalId) => {
-            const modal = document.getElementById(modalId);
+         window.toggleRecord = async (id, currentState) => {
+
+    if (!currentState) {
+        document.getElementById('record-id').value = id;
+        document.getElementById('record-date-input').valueAsDate = new Date();
+        openModal('recordDateModal', 'recordDateModalContent');
+
+    } else {
+        try {
+            await updateDoc(doc(db, "records", id), {
+                recorded: false,
+                enteredDate: ""
+            });
+
+            showToast("Marked as Pending");
+
+        } catch (error) {
+            console.error(error);
+            showToast("Failed to update", "error");
+        }
+    }
+};   const modal = document.getElementById(modalId);
             const content = modal.children[0];
             content.classList.remove('scale-100', 'opacity-100');
             content.classList.add('scale-95', 'opacity-0');
