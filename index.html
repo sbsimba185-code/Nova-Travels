@@ -2,332 +2,315 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0,
-maximum-scale=1.0, user-scalable=no">
-
-<title>My Loan Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan Tracker</title>
 
 <style>
-• {
-box-sizing: border-box;
--webkit-tap-highlight-color: transparent;
+* {
+    box-sizing: border-box;
 }
 
 body {
-margin: 0;
-font-family: Arial, sans-serif;
-background: #f3f5f7;
-color: #222;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f4f7;
+    color: #222;
 }
 
 header {
-background: #172b4d;
-color: white;
-padding: 18px 15px;
+    background: #172b4d;
+    color: white;
+    padding: 18px 15px;
+    text-align: center;
 }
 
 header h1 {
-margin: 0;
-font-size: 22px;
+    margin: 0;
+    font-size: 24px;
 }
 
 header p {
-margin: 5px 0 0;
-font-size: 13px;
+    margin: 6px 0 0;
+    opacity: 0.85;
+    font-size: 13px;
 }
 
 .container {
-max-width: 800px;
-margin: auto;
-padding: 12px;
+    width: 95%;
+    max-width: 900px;
+    margin: 15px auto;
 }
 
 .dashboard {
-max-width: 800px;
-margin: auto;
-padding: 12px;
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .card {
-background: white;
-padding: 14px;
-border-radius: 12px;
-box-shadow: 0 2px 7px rgba(0,0,0,.08);
-}
-
-.card.full {
-grid-column: span 2;
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.08);
 }
 
 .card-title {
-font-size: 12px;
-color: #666;
-margin-bottom: 6px;
+    font-size: 13px;
+    color: #666;
 }
 
 .card-value {
-font-size: 20px;
-font-weight: bold;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 5px;
 }
 
 .section {
-background: white;
-padding: 15px;
-border-radius: 12px;
-margin-bottom: 14px;
-box-shadow: 0 2px 7px rgba(0,0,0,.07);
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.08);
 }
 
 .section h2 {
-margin-top: 0;
-font-size: 18px;
+    margin-top: 0;
+    font-size: 19px;
 }
 
-label {
-display: block;
-font-size: 13px;
-font-weight: bold;
-margin-bottom: 5px;
+input,
+select,
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 8px;
+    font-size: 15px;
 }
 
-input {
-width: 100%;
-padding: 12px;
-border: 1px solid #ccc;
-border-radius: 8px;
-font-size: 16px;
-background: white;
-}
-
-input:focus {
-outline: none;
-border-color: #1976d2;
-}
-
-.form-group {
-margin-bottom: 12px;
+input,
+select {
+    border: 1px solid #ccc;
+    background: white;
 }
 
 button {
-border: none;
-border-radius: 8px;
-padding: 11px 14px;
-font-size: 14px;
-font-weight: bold;
-cursor: pointer;
+    border: none;
+    background: #172b4d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 button:active {
-transform: scale(.97);
+    transform: scale(0.98);
 }
 
-.primary {
-background: #1976d2;
-color: white;
+.btn-green {
+    background: #198754;
 }
 
-.success {
-background: #2e7d32;
-color: white;
+.btn-red {
+    background: #dc3545;
 }
 
-.danger {
-background: #d32f2f;
-color: white;
+.btn-orange {
+    background: #fd7e14;
 }
 
-.warning {
-background: #ef6c00;
-color: white;
+.btn-blue {
+    background: #0d6efd;
 }
 
-.gray {
-background: #e0e0e0;
-color: #222;
+.btn-gray {
+    background: #6c757d;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
 }
 
 .loan {
-border: 1px solid #ddd;
-border-radius: 12px;
-padding: 14px;
-margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.loan-header {
+    background: #eef2f7;
+    padding: 13px;
 }
 
 .loan-name {
-font-size: 18px;
-font-weight: bold;
+    font-size: 18px;
+    font-weight: bold;
 }
 
-.lender {
-color: #777;
-font-size: 13px;
-margin-top: 3px;
+.loan-lender {
+    color: #666;
+    font-size: 13px;
+    margin-top: 3px;
 }
 
-.amount-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 8px;
-margin-top: 12px;
+.loan-body {
+    padding: 13px;
 }
 
-.amount-box {
-background: #f5f5f5;
-padding: 10px;
-border-radius: 8px;
+.amount-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0;
 }
 
 .amount-label {
-color: #777;
-font-size: 11px;
+    color: #666;
 }
 
-.amount {
-font-weight: bold;
-font-size: 16px;
-margin-top: 4px;
+.amount-value {
+    font-weight: bold;
 }
 
-.actions {
-display: flex;
-flex-wrap: wrap;
-gap: 7px;
-margin-top: 12px;
-}
-
-.small {
-padding: 8px 10px;
-font-size: 12px;
-}
-
-.emi-area {
-border-top: 1px solid #eee;
-margin-top: 12px;
-padding-top: 12px;
+.emi-section {
+    margin-top: 12px;
+    border-top: 1px solid #ddd;
+    padding-top: 12px;
 }
 
 .emi {
-border: 1px solid #ddd;
-border-radius: 9px;
-padding: 10px;
-margin-bottom: 8px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 8px;
 }
 
-.emi.paid {
-background: #e8f5e9;
-border-color: #81c784;
+.emi-paid {
+    background: #e9f7ef;
+    border-color: #198754;
+}
+
+.emi-unpaid {
+    background: #fff5f5;
+    border-color: #dc3545;
 }
 
 .emi-row {
-display: flex;
-justify-content: space-between;
-gap: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: center;
+}
+
+.emi-info {
+    flex: 1;
 }
 
 .emi-date {
-font-weight: bold;
+    font-weight: bold;
 }
 
 .emi-amount {
-font-weight: bold;
-}
-
-.period {
-display: inline-block;
-margin-top: 5px;
-padding: 3px 7px;
-border-radius: 10px;
-background: #e3f2fd;
-color: #1565c0;
-font-size: 11px;
+    font-size: 16px;
+    margin-top: 3px;
 }
 
 .status {
-font-size: 12px;
-font-weight: bold;
-margin-top: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 3px;
 }
 
-.paid-text {
-color: #2e7d32;
+.paid {
+    color: #198754;
 }
 
-.unpaid-text {
-color: #d32f2f;
+.unpaid {
+    color: #dc3545;
 }
 
-.month-box {
-display: flex;
-gap: 8px;
+.small-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-top: 10px;
 }
 
-.month-box input {
-flex: 1;
+.month-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.summary-box {
+    padding: 12px;
+    background: #f5f6f8;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.summary-box strong {
+    display: block;
+    font-size: 18px;
+    margin-top: 4px;
 }
 
 .empty {
-text-align: center;
-color: #777;
-padding: 20px 5px;
+    text-align: center;
+    color: #777;
+    padding: 20px;
 }
 
-.search {
-margin-bottom: 12px;
+.warning {
+    background: #fff3cd;
+    color: #664d03;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-top: 10px;
 }
 
-.modal {
-display: none;
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,.55);
-z-index: 100;
-padding: 15px;
-overflow-y: auto;
+.success-message {
+    display: none;
+    background: #d1e7dd;
+    color: #0f5132;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
 }
 
-.modal-box {
-background: white;
-max-width: 500px;
-margin: 30px auto;
-border-radius: 14px;
-padding: 18px;
+.file-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
 }
 
-.modal-box h2 {
-margin-top: 0;
+footer {
+    text-align: center;
+    color: #777;
+    font-size: 12px;
+    padding: 20px;
 }
 
-.modal-buttons {
-display: flex;
-gap: 8px;
-margin-top: 15px;
-}
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
 
-.modal-buttons button {
-flex: 1;
-}
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-.note {
-background: #fff3cd;
-color: #765900;
-padding: 10px;
-border-radius: 8px;
-font-size: 12px;
-margin-top: 10px;
-}
+    .month-summary {
+        grid-template-columns: 1fr;
+    }
 
-@media (min-width: 600px) {
-.dashboard {
-grid-template-columns: repeat(4, 1fr);
-}
-
-.card.full {
-grid-column: span 2;
-}
+    .small-buttons {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 </style>
 </head>
@@ -335,1411 +318,1915 @@ grid-column: span 2;
 <body>
 
 <header>
-<h1>💰 My Loan Tracker</h1>
-<p>Manual EMI & remaining loan tracker</p>
+    <h1>💰 Loan Tracker</h1>
+    <p>Track loans, EMI dates, payments and remaining balance</p>
 </header>
-
-
-<!-- ================= DASHBOARD ================= -->
-
-<div class="dashboard">
-
-<div class="card">
-<div class="card-title">Active Loans</div>
-<div class="card-value" id="totalLoans">0</div>
-</div>
-
-<div class="card">
-<div class="card-title">Remaining Loan</div>
-<div class="card-value" id="totalRemaining">₹0</div>
-</div>
-
-<div class="card">
-<div class="card-title">1–10 EMI</div>
-<div class="card-value" id="emiFirstTen">₹0</div>
-</div>
-
-<div class="card">
-<div class="card-title">11–Month End</div>
-<div class="card-value" id="emiAfterTen">₹0</div>
-</div>
-
-<div class="card full">
-<div class="card-title">Total EMI This Month</div>
-<div class="card-value" id="totalMonthEmi">₹0</div>
-</div>
-
-<div class="card">
-<div class="card-title">Paid EMI</div>
-<div class="card-value" id="paidEmi">₹0</div>
-</div>
-
-<div class="card">
-<div class="card-title">Unpaid EMI</div>
-<div class="card-value" id="unpaidEmi">₹0</div>
-</div>
-
-</div>
-
 
 <div class="container">
 
-<!-- ================= MONTH ================= -->
+    <!-- DASHBOARD -->
+    <div class="dashboard">
 
-<div class="section">
+        <div class="card">
+            <div class="card-title">Number of Loans</div>
+            <div class="card-value" id="loanCount">0</div>
+        </div>
 
-<h2>📅 Month</h2>
+        <div class="card">
+            <div class="card-title">Total Remaining Loan</div>
+            <div class="card-value" id="totalRemaining">₹0</div>
+        </div>
 
-<div class="month-box">
+        <div class="card">
+            <div class="card-title">1st – 10th EMI</div>
+            <div class="card-value" id="firstEmiTotal">₹0</div>
+        </div>
 
-<input type="month" id="selectedMonth">
+        <div class="card">
+            <div class="card-title">11th – Month End EMI</div>
+            <div class="card-value" id="secondEmiTotal">₹0</div>
+        </div>
 
-<button class="primary"
-onclick="currentMonth()">
-Current
-</button>
+        <div class="card">
+            <div class="card-title">Total Monthly EMI</div>
+            <div class="card-value" id="monthlyEmiTotal">₹0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Unpaid EMI</div>
+            <div class="card-value" id="unpaidTotal">₹0</div>
+        </div>
+
+    </div>
+
+
+    <!-- MONTH -->
+    <div class="section">
+
+        <h2>📅 Select Month</h2>
+
+        <input
+            type="month"
+            id="selectedMonth"
+            onchange="changeMonth()"
+        >
+
+        <div class="month-summary">
+
+            <div class="summary-box">
+                1st – 10th
+                <strong id="salary1Total">₹0</strong>
+            </div>
+
+            <div class="summary-box">
+                11th – Month End
+                <strong id="salary2Total">₹0</strong>
+            </div>
+
+            <div class="summary-box">
+                Total
+                <strong id="monthTotal">₹0</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ADD LOAN -->
+    <div class="section">
+
+        <h2>➕ Add New Loan</h2>
+
+        <div class="form-grid">
+
+            <div>
+                <label>Loan Name</label>
+                <input
+                    type="text"
+                    id="loanName"
+                    placeholder="Example: Personal Loan"
+                >
+            </div>
+
+            <div>
+                <label>Lender / Bank</label>
+                <input
+                    type="text"
+                    id="loanLender"
+                    placeholder="Example: SBI"
+                >
+            </div>
+
+            <div>
+                <label>Original Loan Amount</label>
+                <input
+                    type="number"
+                    id="originalAmount"
+                    placeholder="Example: 500000"
+                    min="0"
+                >
+            </div>
+
+            <div>
+                <label>Current Remaining Amount</label>
+                <input
+                    type="number"
+                    id="remainingAmount"
+                    placeholder="Example: 420000"
+                    min="0"
+                >
+            </div>
+
+        </div>
+
+        <button class="btn-green" onclick="addLoan()">
+            ➕ ADD LOAN
+        </button>
+
+        <div id="message" class="success-message"></div>
+
+    </div>
+
+
+    <!-- ADD EMI -->
+    <div class="section">
+
+        <h2>💳 Add EMI</h2>
+
+        <select id="emiLoan">
+            <option value="">Select Loan</option>
+        </select>
+
+        <div class="form-grid">
+
+            <div>
+                <label>EMI Date</label>
+                <input
+                    type="date"
+                    id="emiDate"
+                >
+            </div>
+
+            <div>
+                <label>EMI Amount</label>
+                <input
+                    type="number"
+                    id="emiAmount"
+                    placeholder="Example: 12500"
+                    min="0"
+                >
+            </div>
+
+        </div>
+
+        <button class="btn-blue" onclick="addEmi()">
+            ➕ ADD EMI
+        </button>
+
+        <div class="warning">
+            💡 Enter the EMI manually every month because your EMI date and amount can change.
+        </div>
+
+    </div>
+
+
+    <!-- LOANS -->
+    <div class="section">
+
+        <h2>📋 My Loans</h2>
+
+        <div id="loansContainer"></div>
+
+    </div>
+
+
+    <!-- BACKUP -->
+    <div class="section">
+
+        <h2>💾 Backup & Restore</h2>
+
+        <p style="font-size:13px;color:#666;">
+            Save your loan data to a file so you can restore it later.
+        </p>
+
+        <div class="file-buttons">
+
+            <button
+                class="btn-green"
+                onclick="exportData()"
+            >
+                📥 Backup Data
+            </button>
+
+            <button
+                class="btn-blue"
+                onclick="document.getElementById('fileInput').click()"
+            >
+                📤 Restore Data
+            </button>
+
+        </div>
+
+        <input
+            type="file"
+            id="fileInput"
+            accept=".json"
+            style="display:none"
+            onchange="importData(event)"
+        >
+
+        <button
+            class="btn-gray"
+            onclick="clearAllData()"
+        >
+            🗑️ Delete All Data
+        </button>
+
+    </div>
 
 </div>
 
-</div>
-
-
-<!-- ================= ADD LOAN ================= -->
-
-<div class="section">
-
-<h2>➕ Add New Loan</h2>
-
-<div class="form-group">
-<label>Loan Name</label>
-
-<input
-id="loanName"
-type="text"
-placeholder="Example: SBI Personal Loan">
-</div>
-
-
-<div class="form-group">
-<label>Lender / Bank</label>
-
-<input
-id="loanLender"
-type="text"
-placeholder="Example: SBI">
-</div>
-
-
-<div class="form-group">
-<label>Original Loan Amount</label>
-
-<input
-id="originalAmount"
-type="number"
-inputmode="decimal"
-placeholder="500000">
-</div>
-
-
-<div class="form-group">
-<label>Current Remaining Loan Amount</label>
-
-<input
-id="remainingAmount"
-type="number"
-inputmode="decimal"
-placeholder="350000">
-</div>
-
-
-<button
-class="primary"
-style="width:100%;"
-onclick="addLoan()">
-
-➕ ADD LOAN
-
-</button>
-
-</div>
-
-
-<!-- ================= LOANS ================= -->
-
-<div class="section">
-
-<h2>📋 My Loans</h2>
-
-<div class="search">
-<input
-id="search"
-type="search"
-placeholder="🔍 Search loan..."
-oninput="renderLoans()">
-</div>
-
-<div id="loanList"></div>
-
-</div>
-
-</div>
-
-
-<!-- ================= EDIT LOAN ================= -->
-
-<div class="modal" id="loanModal">
-
-<div class="modal-box">
-
-<h2>✏️ Edit Loan</h2>
-
-<input type="hidden" id="editLoanId">
-
-<div class="form-group">
-<label>Loan Name</label>
-<input id="editLoanName">
-</div>
-
-<div class="form-group">
-<label>Lender / Bank</label>
-<input id="editLoanLender">
-</div>
-
-<div class="form-group">
-<label>Original Loan Amount</label>
-<input
-id="editOriginal"
-type="number"
-inputmode="decimal">
-</div>
-
-<div class="form-group">
-<label>Remaining Loan Amount</label>
-<input
-id="editRemaining"
-type="number"
-inputmode="decimal">
-</div>
-
-<div class="modal-buttons">
-
-<button class="success"
-onclick="saveLoanEdit()">
-Save
-</button>
-
-<button class="gray"
-onclick="closeLoanModal()">
-Cancel
-</button>
-
-</div>
-
-</div>
-</div>
-
-
-<!-- ================= EMI MODAL ================= -->
-
-<div class="modal" id="emiModal">
-
-<div class="modal-box">
-
-<h2 id="emiTitle">➕ Add EMI</h2>
-
-<input type="hidden" id="emiLoanId">
-<input type="hidden" id="editEmiId">
-
-<div class="form-group">
-
-<label>EMI Date</label>
-
-<input
-id="emiDate"
-type="date">
-
-</div>
-
-
-<div class="form-group">
-
-<label>EMI Amount</label>
-
-<input
-id="emiAmount"
-type="number"
-inputmode="decimal"
-placeholder="8500">
-
-</div>
-
-
-<div class="note">
-Enter the actual EMI date and amount every month.
-You can change both whenever required.
-</div>
-
-
-<div class="modal-buttons">
-
-<button class="success"
-onclick="saveEmi()">
-Save EMI
-</button>
-
-<button class="gray"
-onclick="closeEmiModal()">
-Cancel
-</button>
-
-</div>
-
-</div>
-</div>
+<footer>
+    Loan Tracker • Data is stored in your browser
+</footer>
 
 
 <script>
 
-/* =====================================================
-SAFE DATA LOADING
-===================================================== */
+"use strict";
 
-const STORAGE_KEY = "MY_LOAN_TRACKER_DATA_V2";
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const STORAGE_KEY = "NOVA_LOAN_TRACKER_V1";
 
 let loans = [];
 
-try {
-
-const saved =
-localStorage.getItem(STORAGE_KEY);
-
-if (saved) {
-
-const parsed = JSON.parse(saved);
-
-if (Array.isArray(parsed)) {
-loans = parsed;
-}
-
-}
-
-} catch (error) {
-
-console.log("Old data could not be loaded.");
-
-loans = [];
-
-}
+let selectedMonth = "";
 
 
-/* =====================================================
-MONTH
-===================================================== */
+/* =========================================================
+   START APPLICATION
+========================================================= */
 
-function getCurrentMonth() {
+document.addEventListener("DOMContentLoaded", function() {
 
-const d = new Date();
+    loadData();
 
-return d.getFullYear() +
-"-" +
-String(d.getMonth() + 1).padStart(2, "0");
-}
+    const monthInput =
+        document.getElementById("selectedMonth");
 
+    const now = new Date();
 
-let selectedMonth =
-localStorage.getItem("LOAN_SELECTED_MONTH") ||
-getCurrentMonth();
+    const year = now.getFullYear();
 
+    const month =
+        String(now.getMonth() + 1).padStart(2, "0");
 
-document.getElementById("selectedMonth").value =
-selectedMonth;
+    selectedMonth = localStorage.getItem(
+        "NOVA_SELECTED_MONTH"
+    ) || `${year}-${month}`;
 
+    monthInput.value = selectedMonth;
 
-document.getElementById("selectedMonth")
-.addEventListener("change", function() {
-
-selectedMonth = this.value;
-
-localStorage.setItem(
-"LOAN_SELECTED_MONTH",
-selectedMonth
-);
-
-renderAll();
+    renderAll();
 
 });
 
 
-function currentMonth() {
+/* =========================================================
+   LOAD DATA
+========================================================= */
 
-selectedMonth = getCurrentMonth();
+function loadData() {
 
-document.getElementById("selectedMonth").value =
-selectedMonth;
+    try {
 
-localStorage.setItem(
-"LOAN_SELECTED_MONTH",
-selectedMonth
-);
+        const saved =
+            localStorage.getItem(STORAGE_KEY);
 
-renderAll();
+        if (!saved) {
+
+            loans = [];
+
+            return;
+        }
+
+        const parsed =
+            JSON.parse(saved);
+
+        if (Array.isArray(parsed)) {
+
+            loans = parsed;
+
+        } else {
+
+            loans = [];
+
+        }
+
+    } catch(error) {
+
+        console.error(
+            "Could not load loan data:",
+            error
+        );
+
+        loans = [];
+
+    }
 
 }
 
 
-/* =====================================================
-SAVE DATA
-===================================================== */
+/* =========================================================
+   SAVE DATA
+========================================================= */
 
 function saveData() {
 
-try {
+    try {
 
-localStorage.setItem(
-STORAGE_KEY,
-JSON.stringify(loans)
-);
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(loans)
+        );
 
-return true;
+    } catch(error) {
 
-} catch (error) {
+        alert(
+            "Unable to save data in this browser."
+        );
 
-alert(
-"Unable to save data in this browser."
-);
+        console.error(error);
 
-console.error(error);
-
-return false;
-}
-}
-
-
-/* =====================================================
-MONEY
-===================================================== */
-
-function money(value) {
-
-return new Intl.NumberFormat(
-"en-IN",
-{
-style: "currency",
-currency: "INR",
-maximumFractionDigits: 0
-}
-).format(Number(value) || 0);
+    }
 
 }
 
 
-/* =====================================================
-ADD LOAN
-===================================================== */
+/* =========================================================
+   MONEY FORMAT
+========================================================= */
+
+function money(amount) {
+
+    const number =
+        Number(amount) || 0;
+
+    return "₹" + number.toLocaleString(
+        "en-IN",
+        {
+            maximumFractionDigits: 2
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ADD LOAN
+========================================================= */
 
 function addLoan() {
 
-const name =
-document.getElementById("loanName")
-.value
-.trim();
+    try {
 
-const lender =
-document.getElementById("loanLender")
-.value
-.trim();
+        const name =
+            document.getElementById(
+                "loanName"
+            ).value.trim();
 
-const originalText =
-document.getElementById("originalAmount")
-.value
-.trim();
+        const lender =
+            document.getElementById(
+                "loanLender"
+            ).value.trim();
 
-const remainingText =
-document.getElementById("remainingAmount")
-.value
-.trim();
+        const originalAmount =
+            Number(
+                document.getElementById(
+                    "originalAmount"
+                ).value
+            );
 
-
-if (name === "") {
-
-alert("Please enter the loan name.");
-
-document.getElementById("loanName").focus();
-
-return;
-
-}
+        const remainingAmount =
+            Number(
+                document.getElementById(
+                    "remainingAmount"
+                ).value
+            );
 
 
-if (remainingText === "") {
+        if (!name) {
 
-alert(
-"Please enter the current remaining loan amount."
-);
+            alert(
+                "Please enter Loan Name."
+            );
 
-document.getElementById("remainingAmount").focus();
+            return;
 
-return;
-
-}
+        }
 
 
-const original =
-Number(originalText) || 0;
+        if (
+            isNaN(originalAmount) ||
+            originalAmount < 0
+        ) {
 
-const remaining =
-Number(remainingText);
+            alert(
+                "Please enter a valid Original Loan Amount."
+            );
 
+            return;
 
-if (!Number.isFinite(remaining) ||
-remaining < 0) {
-
-alert(
-"Please enter a valid remaining loan amount."
-);
-
-return;
-
-}
+        }
 
 
-const newLoan = {
+        if (
+            isNaN(remainingAmount) ||
+            remainingAmount < 0
+        ) {
 
-id:
-Date.now().toString() +
-Math.random()
-.toString(36)
-.substring(2),
+            alert(
+                "Please enter a valid Remaining Loan Amount."
+            );
 
-name: name,
+            return;
 
-lender: lender,
-
-originalAmount: original,
-
-remainingAmount: remaining,
-
-emis: []
-
-};
+        }
 
 
-loans.push(newLoan);
+        const newLoan = {
+
+            id:
+                Date.now().toString() +
+                "_" +
+                Math.random()
+                    .toString(36)
+                    .substring(2, 9),
+
+            name: name,
+
+            lender: lender,
+
+            originalAmount:
+                originalAmount,
+
+            remainingAmount:
+                remainingAmount,
+
+            emis: []
+
+        };
 
 
-if (!saveData()) {
+        loans.push(newLoan);
 
-loans.pop();
+        saveData();
 
-return;
+        clearLoanForm();
 
-}
+        updateLoanSelect();
 
+        renderAll();
 
-/* Clear form */
+        showMessage(
+            "Loan added successfully!"
+        );
 
-document.getElementById("loanName").value = "";
+    } catch(error) {
 
-document.getElementById("loanLender").value = "";
+        console.error(error);
 
-document.getElementById("originalAmount").value = "";
+        alert(
+            "Something went wrong while adding the loan."
+        );
 
-document.getElementById("remainingAmount").value = "";
-
-
-renderAll();
-
-
-alert(
-"Loan added successfully!"
-);
-
-}
-
-
-/* =====================================================
-EDIT LOAN
-===================================================== */
-
-function editLoan(id) {
-
-const loan =
-loans.find(x => x.id === id);
-
-if (!loan) return;
-
-
-document.getElementById("editLoanId").value =
-loan.id;
-
-document.getElementById("editLoanName").value =
-loan.name;
-
-document.getElementById("editLoanLender").value =
-loan.lender;
-
-document.getElementById("editOriginal").value =
-loan.originalAmount;
-
-document.getElementById("editRemaining").value =
-loan.remainingAmount;
-
-
-document.getElementById("loanModal").style.display =
-"block";
+    }
 
 }
 
 
-function saveLoanEdit() {
+/* =========================================================
+   CLEAR LOAN FORM
+========================================================= */
 
-const id =
-document.getElementById("editLoanId").value;
+function clearLoanForm() {
 
-const loan =
-loans.find(x => x.id === id);
+    document.getElementById(
+        "loanName"
+    ).value = "";
 
-if (!loan) return;
+    document.getElementById(
+        "loanLender"
+    ).value = "";
 
+    document.getElementById(
+        "originalAmount"
+    ).value = "";
 
-const name =
-document.getElementById("editLoanName")
-.value
-.trim();
-
-const lender =
-document.getElementById("editLoanLender")
-.value
-.trim();
-
-const original =
-Number(
-document.getElementById("editOriginal").value
-) || 0;
-
-const remaining =
-Number(
-document.getElementById("editRemaining").value
-);
-
-
-if (!name) {
-
-alert("Loan name is required.");
-
-return;
+    document.getElementById(
+        "remainingAmount"
+    ).value = "";
 
 }
 
 
-if (!Number.isFinite(remaining) ||
-remaining < 0) {
+/* =========================================================
+   MESSAGE
+========================================================= */
 
-alert("Enter a valid remaining amount.");
+function showMessage(message) {
 
-return;
+    const box =
+        document.getElementById("message");
 
-}
+    box.textContent = message;
 
+    box.style.display = "block";
 
-loan.name = name;
+    setTimeout(function() {
 
-loan.lender = lender;
+        box.style.display = "none";
 
-loan.originalAmount = original;
-
-loan.remainingAmount = remaining;
-
-
-saveData();
-
-closeLoanModal();
-
-renderAll();
+    }, 2500);
 
 }
 
 
-function closeLoanModal() {
+/* =========================================================
+   UPDATE LOAN SELECT
+========================================================= */
 
-document.getElementById("loanModal")
-.style.display = "none";
+function updateLoanSelect() {
 
-}
+    const select =
+        document.getElementById("emiLoan");
 
+    select.innerHTML =
+        '<option value="">Select Loan</option>';
 
-/* =====================================================
-DELETE LOAN
-===================================================== */
+    loans.forEach(function(loan) {
 
-function deleteLoan(id) {
+        const option =
+            document.createElement("option");
 
-const loan =
-loans.find(x => x.id === id);
+        option.value = loan.id;
 
-if (!loan) return;
+        option.textContent =
+            loan.name +
+            (
+                loan.lender
+                    ? " - " + loan.lender
+                    : ""
+            );
 
+        select.appendChild(option);
 
-if (
-!confirm(
-"Delete this loan and all its EMI records?"
-)
-) {
-
-return;
-
-}
-
-
-loans =
-loans.filter(x => x.id !== id);
-
-saveData();
-
-renderAll();
+    });
 
 }
 
 
-/* =====================================================
-ADD EMI
-===================================================== */
+/* =========================================================
+   ADD EMI
+========================================================= */
 
-function addEmi(loanId) {
+function addEmi() {
 
-document.getElementById("emiLoanId").value =
-loanId;
+    const loanId =
+        document.getElementById(
+            "emiLoan"
+        ).value;
 
-document.getElementById("editEmiId").value = "";
+    const date =
+        document.getElementById(
+            "emiDate"
+        ).value;
 
-document.getElementById("emiTitle").innerText =
-"➕ Add EMI";
+    const amount =
+        Number(
+            document.getElementById(
+                "emiAmount"
+            ).value
+        );
 
 
-document.getElementById("emiDate").value =
-selectedMonth + "-01";
+    if (!loanId) {
 
-document.getElementById("emiAmount").value = "";
+        alert(
+            "Please select a loan."
+        );
+
+        return;
+
+    }
 
 
-document.getElementById("emiModal")
-.style.display = "block";
+    if (!date) {
+
+        alert(
+            "Please select EMI date."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        isNaN(amount) ||
+        amount <= 0
+    ) {
+
+        alert(
+            "Please enter a valid EMI amount."
+        );
+
+        return;
+
+    }
+
+
+    const loan =
+        loans.find(
+            function(item) {
+                return item.id === loanId;
+            }
+        );
+
+
+    if (!loan) {
+
+        alert(
+            "Loan not found."
+        );
+
+        return;
+
+    }
+
+
+    if (!Array.isArray(loan.emis)) {
+
+        loan.emis = [];
+
+    }
+
+
+    loan.emis.push({
+
+        id:
+            Date.now().toString() +
+            "_" +
+            Math.random()
+                .toString(36)
+                .substring(2, 9),
+
+        date: date,
+
+        amount: amount,
+
+        paid: false
+
+    });
+
+
+    loan.emis.sort(
+        function(a,b) {
+
+            return a.date.localeCompare(
+                b.date
+            );
+
+        }
+    );
+
+
+    saveData();
+
+    document.getElementById(
+        "emiDate"
+    ).value = "";
+
+    document.getElementById(
+        "emiAmount"
+    ).value = "";
+
+    renderAll();
+
+    showMessage(
+        "EMI added successfully!"
+    );
 
 }
 
 
-/* =====================================================
-EDIT EMI
-===================================================== */
+/* =========================================================
+   CHANGE MONTH
+========================================================= */
 
-function editEmi(loanId, emiId) {
+function changeMonth() {
 
-const loan =
-loans.find(x => x.id === loanId);
+    selectedMonth =
+        document.getElementById(
+            "selectedMonth"
+        ).value;
 
-if (!loan) return;
+    localStorage.setItem(
+        "NOVA_SELECTED_MONTH",
+        selectedMonth
+    );
 
-
-const emi =
-loan.emis.find(x => x.id === emiId);
-
-if (!emi) return;
-
-
-document.getElementById("emiLoanId").value =
-loanId;
-
-document.getElementById("editEmiId").value =
-emiId;
-
-document.getElementById("emiDate").value =
-emi.date;
-
-document.getElementById("emiAmount").value =
-emi.amount;
-
-document.getElementById("emiTitle").innerText =
-"✏️ Edit EMI";
-
-
-document.getElementById("emiModal")
-.style.display = "block";
+    renderAll();
 
 }
 
 
-/* =====================================================
-SAVE EMI
-===================================================== */
+/* =========================================================
+   EMI GROUP
+========================================================= */
 
-function saveEmi() {
+function getEmiGroup(dateString) {
 
-const loanId =
-document.getElementById("emiLoanId").value;
+    const day =
+        Number(
+            dateString.substring(8,10)
+        );
 
-const emiId =
-document.getElementById("editEmiId").value;
+    if (day >= 1 && day <= 10) {
 
-const date =
-document.getElementById("emiDate").value;
+        return "first";
 
-const amount =
-Number(
-document.getElementById("emiAmount").value
-);
+    }
 
-
-if (!date) {
-
-alert("Please select EMI date.");
-
-return;
+    return "second";
 
 }
 
 
-if (!Number.isFinite(amount) ||
-amount <= 0) {
+/* =========================================================
+   GET SELECTED MONTH EMIS
+========================================================= */
 
-alert("Please enter a valid EMI amount.");
+function getMonthEmis() {
 
-return;
+    const result = {
 
-}
+        first: [],
 
+        second: []
 
-const loan =
-loans.find(x => x.id === loanId);
-
-if (!loan) return;
-
-
-if (!Array.isArray(loan.emis)) {
-loan.emis = [];
-}
+    };
 
 
-if (emiId) {
+    loans.forEach(function(loan) {
 
-const emi =
-loan.emis.find(x => x.id === emiId);
+        if (!Array.isArray(loan.emis)) {
 
-if (emi) {
+            return;
 
-emi.date = date;
+        }
 
-emi.amount = amount;
 
-}
+        loan.emis.forEach(function(emi) {
 
-}
+            if (
+                emi.date &&
+                emi.date.substring(0,7)
+                    === selectedMonth
+            ) {
 
-else {
+                const group =
+                    getEmiGroup(emi.date);
 
-loan.emis.push({
+                result[group].push({
 
-id:
-Date.now().toString() +
-Math.random()
-.toString(36)
-.substring(2),
+                    loan: loan,
 
-date: date,
+                    emi: emi
 
-amount: amount,
+                });
 
-paid: false
+            }
 
-});
+        });
+
+    });
+
+
+    return result;
 
 }
 
 
-saveData();
-
-closeEmiModal();
-
-renderAll();
-
-}
-
-
-/* =====================================================
-CLOSE EMI
-===================================================== */
-
-function closeEmiModal() {
-
-document.getElementById("emiModal")
-.style.display = "none";
-
-}
-
-
-/* =====================================================
-PAID / UNPAID
-===================================================== */
-
-function togglePaid(loanId, emiId) {
-
-const loan =
-loans.find(x => x.id === loanId);
-
-if (!loan) return;
-
-
-const emi =
-loan.emis.find(x => x.id === emiId);
-
-if (!emi) return;
-
-
-emi.paid = !emi.paid;
-
-saveData();
-
-renderAll();
-
-}
-
-
-/* =====================================================
-DELETE EMI
-===================================================== */
-
-function deleteEmi(loanId, emiId) {
-
-const loan =
-loans.find(x => x.id === loanId);
-
-if (!loan) return;
-
-
-if (!confirm("Delete this EMI?")) {
-return;
-}
-
-
-loan.emis =
-loan.emis.filter(x => x.id !== emiId);
-
-saveData();
-
-renderAll();
-
-}
-
-
-/* =====================================================
-DASHBOARD
-===================================================== */
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
 function updateDashboard() {
 
-let remaining = 0;
+    let totalRemaining = 0;
 
-loans.forEach(loan => {
+    loans.forEach(function(loan) {
 
-remaining +=
-Number(loan.remainingAmount) || 0;
+        totalRemaining +=
+            Number(
+                loan.remainingAmount
+            ) || 0;
 
-});
+    });
 
 
-let firstTen = 0;
+    const monthEmis =
+        getMonthEmis();
 
-let afterTen = 0;
 
-let paid = 0;
+    let firstTotal = 0;
 
-let unpaid = 0;
+    let secondTotal = 0;
 
+    let unpaidTotal = 0;
 
-loans.forEach(loan => {
 
-if (!Array.isArray(loan.emis)) {
-return;
-}
+    monthEmis.first.forEach(function(item) {
 
+        firstTotal +=
+            Number(item.emi.amount) || 0;
 
-loan.emis.forEach(emi => {
+        if (!item.emi.paid) {
 
-if (
-!emi.date ||
-emi.date.substring(0,7) !== selectedMonth
-) {
+            unpaidTotal +=
+                Number(item.emi.amount) || 0;
 
-return;
+        }
 
-}
+    });
 
 
-const amount =
-Number(emi.amount) || 0;
+    monthEmis.second.forEach(function(item) {
 
+        secondTotal +=
+            Number(item.emi.amount) || 0;
 
-const day =
-Number(
-emi.date.substring(8,10)
-);
+        if (!item.emi.paid) {
 
+            unpaidTotal +=
+                Number(item.emi.amount) || 0;
 
-if (day <= 10) {
+        }
 
-firstTen += amount;
+    });
 
-}
 
-else {
+    document.getElementById(
+        "loanCount"
+    ).textContent = loans.length;
 
-afterTen += amount;
 
-}
+    document.getElementById(
+        "totalRemaining"
+    ).textContent =
+        money(totalRemaining);
 
 
-if (emi.paid) {
+    document.getElementById(
+        "firstEmiTotal"
+    ).textContent =
+        money(firstTotal);
 
-paid += amount;
 
-}
+    document.getElementById(
+        "secondEmiTotal"
+    ).textContent =
+        money(secondTotal);
 
-else {
 
-unpaid += amount;
+    document.getElementById(
+        "monthlyEmiTotal"
+    ).textContent =
+        money(
+            firstTotal +
+            secondTotal
+        );
 
-}
 
-});
+    document.getElementById(
+        "unpaidTotal"
+    ).textContent =
+        money(unpaidTotal);
 
-});
 
+    document.getElementById(
+        "salary1Total"
+    ).textContent =
+        money(firstTotal);
 
-document.getElementById("totalLoans")
-.innerText = loans.length;
 
-
-document.getElementById("totalRemaining")
-.innerText = money(remaining);
-
-
-document.getElementById("emiFirstTen")
-.innerText = money(firstTen);
-
-
-document.getElementById("emiAfterTen")
-.innerText = money(afterTen);
-
-
-document.getElementById("totalMonthEmi")
-.innerText =
-money(firstTen + afterTen);
-
-
-document.getElementById("paidEmi")
-.innerText = money(paid);
-
-
-document.getElementById("unpaidEmi")
-.innerText = money(unpaid);
-
-}
-
-
-/* =====================================================
-RENDER LOANS
-===================================================== */
-
-function renderLoans() {
-
-const list =
-document.getElementById("loanList");
-
-const search =
-document.getElementById("search")
-.value
-.toLowerCase()
-.trim();
-
-
-const filtered =
-loans.filter(loan => {
-
-return (
-String(loan.name)
-.toLowerCase()
-.includes(search)
-
-||
-
-String(loan.lender)
-.toLowerCase()
-.includes(search)
-);
-
-});
-
-
-if (filtered.length === 0) {
-
-list.innerHTML = &lt;div class="empty"&gt; No loans added yet. &lt;/div&gt;;
-
-return;
+    document.getElementById(
+        "salary2Total"
+    ).textContent =
+        money(secondTotal);
+
+
+    document.getElementById(
+        "monthTotal"
+    ).textContent =
+        money(
+            firstTotal +
+            secondTotal
+        );
 
 }
 
 
-list.innerHTML = "";
-
-
-filtered.forEach(loan => {
-
-if (!Array.isArray(loan.emis)) {
-loan.emis = [];
-}
-
-
-const monthEmis =
-loan.emis
-.filter(emi =>
-emi.date &&
-emi.date.substring(0,7) === selectedMonth
-)
-.sort(
-(a,b) =>
-a.date.localeCompare(b.date)
-);
-
-
-let emiHTML = "";
-
-
-if (monthEmis.length === 0) {
-
-emiHTML = &lt;div class="empty"&gt; No EMI entered for this month. &lt;/div&gt;;
-
-}
-
-else {
-
-monthEmis.forEach(emi => {
-
-const day =
-Number(
-emi.date.substring(8,10)
-);
-
-
-const period =
-day <= 10
-? "1–10"
-: "11–Month End";
-
-
-emiHTML += `
-
-<div class="emi $`{
-emi.paid ? "paid" : ""
-}">
-
-<div class="emi-row">
-
-<div>
-
-<div class="emi-date">
-`${formatDate(emi.date)}
-</div>
-
-<span class="period">
-$`{period}
-</span>
-
-</div>
-
-<div class="emi-amount">
-`${money(emi.amount)}
-</div>
-
-</div>
-
-
-<div class="status $`{
-emi.paid
-? "paid-text"
-: "unpaid-text"
-}">
-
-`${
-emi.paid
-? "✓ PAID"
-: "● UNPAID"
-}
-
-</div>
-
-
-<div class="actions">
-
-<button
-class="{loan.id}',
-'$`{emi.id}'
-)">
-
-`${
-emi.paid
-? "Mark Unpaid"
-: "Mark Paid"
-}
-
-</button>
-
-
-<button
-class="gray small"
-onclick="editEmi(
-'{emi.id}'
-)">
-
-Edit
-
-</button>
-
-
-<button
-class="danger small"
-onclick="deleteEmi(
-'{emi.id}'
-)">
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-const loanHTML = document.createElement("div");
-
-loanHTML.className = "loan";
-
-
-loanHTML.innerHTML = `
-
-<div class="loan-name">
-$`{escapeHTML(loan.name)}
-</div>
-
-<div class="lender">
-`${escapeHTML(loan.lender)}
-</div>
-
-
-<div class="amount-grid">
-
-<div class="amount-box">
-
-<div class="amount-label">
-Original Loan
-</div>
-
-<div class="amount">
-$`{money(loan.originalAmount)}
-</div>
-
-</div>
-
-
-<div class="amount-box">
-
-<div class="amount-label">
-Remaining Loan
-</div>
-
-<div class="amount">
-`${money(loan.remainingAmount)}
-</div>
-
-</div>
-
-</div>
-
-
-<div class="actions">
-
-<button
-class="primary small"
-onclick="addEmi('$`{loan.id}')">
-
-➕ Add EMI
-
-</button>
-
-
-<button
-class="gray small"
-onclick="editLoan('`${loan.id}')">
-
-✏️ Edit Loan
-
-</button>
-
-
-<button
-class="danger small"
-onclick="deleteLoan('$`{loan.id}')">
-
-🗑 Delete
-
-</button>
-
-</div>
-
-
-<div class="emi-area">
-
-<b>
-EMI — `${formatMonth(selectedMonth)}
-</b>
-
-<br><br>
-
-${emiHTML}
-
-</div>
-
-`;
-
-
-list.appendChild(loanHTML);
-
-});
-
-}
-
-
-/* =====================================================
-DATE
-===================================================== */
-
-function formatDate(value) {
-
-const d =
-new Date(value + "T00:00:00");
-
-return d.toLocaleDateString(
-"en-IN",
-{
-day: "2-digit",
-month: "short",
-year: "numeric"
-}
-);
-
-}
-
-
-/* =====================================================
-MONTH
-===================================================== */
-
-function formatMonth(value) {
-
-if (!value) return "";
-
-const parts =
-value.split("-");
-
-const d =
-new Date(
-Number(parts[0]),
-Number(parts[1]) - 1,
-1
-);
-
-return d.toLocaleDateString(
-"en-IN",
-{
-month: "long",
-year: "numeric"
-}
-);
-
-}
-
-
-/* =====================================================
-ESCAPE TEXT
-===================================================== */
-
-function escapeHTML(text) {
-
-return String(text || "")
-.replace(/&/g, "&")
-.replace(/</g, "<")
-.replace(/>/g, ">")
-.replace(/"/g, """)
-.replace(/'/g, "'");
-
-}
-
-
-/* =====================================================
-RENDER EVERYTHING
-===================================================== */
+/* =========================================================
+   RENDER ALL
+========================================================= */
 
 function renderAll() {
 
-updateDashboard();
+    updateLoanSelect();
 
-renderLoans();
+    updateDashboard();
 
-}
-
-
-/* =====================================================
-MODAL OUTSIDE CLICK
-===================================================== */
-
-window.addEventListener(
-"click",
-function(event) {
-
-const loanModal =
-document.getElementById("loanModal");
-
-const emiModal =
-document.getElementById("emiModal");
-
-
-if (event.target === loanModal) {
-
-closeLoanModal();
+    renderLoans();
 
 }
 
 
-if (event.target === emiModal) {
+/* =========================================================
+   RENDER LOANS
+========================================================= */
 
-closeEmiModal();
+function renderLoans() {
+
+    const container =
+        document.getElementById(
+            "loansContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (loans.length === 0) {
+
+        container.innerHTML =
+            '<div class="empty">' +
+            'No loans added yet.' +
+            '<br><br>' +
+            'Use "Add New Loan" above.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    loans.forEach(function(loan) {
+
+        if (!Array.isArray(loan.emis)) {
+
+            loan.emis = [];
+
+        }
+
+
+        const loanDiv =
+            document.createElement("div");
+
+        loanDiv.className = "loan";
+
+
+        let emiHTML = "";
+
+
+        const monthEmis =
+            loan.emis.filter(
+                function(emi) {
+
+                    return (
+                        emi.date &&
+                        emi.date.substring(0,7)
+                            === selectedMonth
+                    );
+
+                }
+            );
+
+
+        if (monthEmis.length === 0) {
+
+            emiHTML =
+                '<div style="color:#777;font-size:13px;">' +
+                'No EMI entered for this month.' +
+                '</div>';
+
+        } else {
+
+            monthEmis.forEach(function(emi) {
+
+                const group =
+                    getEmiGroup(emi.date);
+
+                const groupText =
+                    group === "first"
+                        ? "1st–10th"
+                        : "11th–Month End";
+
+
+                emiHTML +=
+
+                    '<div class="emi ' +
+                    (
+                        emi.paid
+                            ? "emi-paid"
+                            : "emi-unpaid"
+                    ) +
+                    '">' +
+
+                    '<div class="emi-row">' +
+
+                    '<div class="emi-info">' +
+
+                    '<div class="emi-date">' +
+                    formatDate(emi.date) +
+                    '</div>' +
+
+                    '<div style="font-size:12px;color:#666;">' +
+                    groupText +
+                    '</div>' +
+
+                    '<div class="emi-amount">' +
+                    money(emi.amount) +
+                    '</div>' +
+
+                    '<div class="status ' +
+                    (
+                        emi.paid
+                            ? "paid"
+                            : "unpaid"
+                    ) +
+                    '">' +
+                    (
+                        emi.paid
+                            ? "✓ PAID"
+                            : "✗ UNPAID"
+                    ) +
+                    '</div>' +
+
+                    '</div>' +
+
+                    '<div style="width:100px;">' +
+
+                    '<button class="' +
+                    (
+                        emi.paid
+                            ? "btn-orange"
+                            : "btn-green"
+                    ) +
+                    '" onclick="toggleEmi(\'' +
+                    loan.id +
+                    '\',\'' +
+                    emi.id +
+                    '\')">' +
+                    (
+                        emi.paid
+                            ? "Mark Unpaid"
+                            : "Mark Paid"
+                    ) +
+                    '</button>' +
+
+                    '</div>' +
+
+                    '</div>' +
+
+                    '<div class="small-buttons">' +
+
+                    '<button class="btn-blue" onclick="editEmi(\'' +
+                    loan.id +
+                    '\',\'' +
+                    emi.id +
+                    '\')">' +
+                    '✏️ Edit' +
+                    '</button>' +
+
+                    '<button class="btn-red" onclick="deleteEmi(\'' +
+                    loan.id +
+                    '\',\'' +
+                    emi.id +
+                    '\')">' +
+                    '🗑️ Delete' +
+                    '</button>' +
+
+                    '</div>' +
+
+                    '</div>';
+
+            });
+
+        }
+
+
+        loanDiv.innerHTML =
+
+            '<div class="loan-header">' +
+
+            '<div class="loan-name">' +
+            escapeHTML(loan.name) +
+            '</div>' +
+
+            '<div class="loan-lender">' +
+            (
+                loan.lender
+                    ? escapeHTML(loan.lender)
+                    : "Lender not entered"
+            ) +
+            '</div>' +
+
+            '</div>' +
+
+
+            '<div class="loan-body">' +
+
+            '<div class="amount-row">' +
+
+            '<span class="amount-label">' +
+            'Original Loan' +
+            '</span>' +
+
+            '<span class="amount-value">' +
+            money(loan.originalAmount) +
+            '</span>' +
+
+            '</div>' +
+
+
+            '<div class="amount-row">' +
+
+            '<span class="amount-label">' +
+            'Remaining Loan' +
+            '</span>' +
+
+            '<span class="amount-value">' +
+            money(loan.remainingAmount) +
+            '</span>' +
+
+            '</div>' +
+
+
+            '<div class="small-buttons">' +
+
+            '<button class="btn-blue" onclick="editLoan(\'' +
+            loan.id +
+            '\')">' +
+            '✏️ Edit Loan' +
+            '</button>' +
+
+            '<button class="btn-red" onclick="deleteLoan(\'' +
+            loan.id +
+            '\')">' +
+            '🗑️ Delete Loan' +
+            '</button>' +
+
+            '</div>' +
+
+
+            '<div class="emi-section">' +
+
+            '<strong>EMI for ' +
+            formatMonth(selectedMonth) +
+            '</strong>' +
+
+            emiHTML +
+
+            '</div>' +
+
+            '</div>';
+
+
+        container.appendChild(
+            loanDiv
+        );
+
+    });
 
 }
 
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(dateString) {
+
+    if (!dateString) {
+
+        return "";
+
+    }
+
+    const parts =
+        dateString.split("-");
+
+    if (parts.length !== 3) {
+
+        return dateString;
+
+    }
+
+    return (
+        parts[2] +
+        "-" +
+        parts[1] +
+        "-" +
+        parts[0]
+    );
+
 }
-);
 
 
-/* =====================================================
-START
-===================================================== */
+/* =========================================================
+   FORMAT MONTH
+========================================================= */
 
-renderAll();
+function formatMonth(monthString) {
+
+    if (!monthString) {
+
+        return "";
+
+    }
+
+    const parts =
+        monthString.split("-");
+
+    if (parts.length !== 2) {
+
+        return monthString;
+
+    }
+
+    const date =
+        new Date(
+            Number(parts[0]),
+            Number(parts[1]) - 1,
+            1
+        );
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            month: "long",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TOGGLE EMI
+========================================================= */
+
+function toggleEmi(
+    loanId,
+    emiId
+) {
+
+    const loan =
+        loans.find(
+            function(item) {
+                return item.id === loanId;
+            }
+        );
+
+
+    if (!loan) {
+
+        return;
+
+    }
+
+
+    const emi =
+        loan.emis.find(
+            function(item) {
+                return item.id === emiId;
+            }
+        );
+
+
+    if (!emi) {
+
+        return;
+
+    }
+
+
+    emi.paid =
+        !emi.paid;
+
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   EDIT EMI
+========================================================= */
+
+function editEmi(
+    loanId,
+    emiId
+) {
+
+    const loan =
+        loans.find(
+            function(item) {
+                return item.id === loanId;
+            }
+        );
+
+
+    if (!loan) {
+
+        return;
+
+    }
+
+
+    const emi =
+        loan.emis.find(
+            function(item) {
+                return item.id === emiId;
+            }
+        );
+
+
+    if (!emi) {
+
+        return;
+
+    }
+
+
+    const newDate =
+        prompt(
+            "Enter EMI date (YYYY-MM-DD):",
+            emi.date
+        );
+
+
+    if (newDate === null) {
+
+        return;
+
+    }
+
+
+    const newAmount =
+        prompt(
+            "Enter EMI amount:",
+            emi.amount
+        );
+
+
+    if (newAmount === null) {
+
+        return;
+
+    }
+
+
+    const amount =
+        Number(newAmount);
+
+
+    if (
+        !newDate ||
+        isNaN(amount) ||
+        amount <= 0
+    ) {
+
+        alert(
+            "Invalid EMI details."
+        );
+
+        return;
+
+    }
+
+
+    emi.date = newDate;
+
+    emi.amount = amount;
+
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   DELETE EMI
+========================================================= */
+
+function deleteEmi(
+    loanId,
+    emiId
+) {
+
+    if (
+        !confirm(
+            "Delete this EMI?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const loan =
+        loans.find(
+            function(item) {
+                return item.id === loanId;
+            }
+        );
+
+
+    if (!loan) {
+
+        return;
+
+    }
+
+
+    loan.emis =
+        loan.emis.filter(
+            function(emi) {
+                return emi.id !== emiId;
+            }
+        );
+
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   EDIT LOAN
+========================================================= */
+
+function editLoan(loanId) {
+
+    const loan =
+        loans.find(
+            function(item) {
+                return item.id === loanId;
+            }
+        );
+
+
+    if (!loan) {
+
+        return;
+
+    }
+
+
+    const newName =
+        prompt(
+            "Loan Name:",
+            loan.name
+        );
+
+
+    if (newName === null) {
+
+        return;
+
+    }
+
+
+    const newLender =
+        prompt(
+            "Lender / Bank:",
+            loan.lender || ""
+        );
+
+
+    if (newLender === null) {
+
+        return;
+
+    }
+
+
+    const newOriginal =
+        prompt(
+            "Original Loan Amount:",
+            loan.originalAmount
+        );
+
+
+    if (newOriginal === null) {
+
+        return;
+
+    }
+
+
+    const newRemaining =
+        prompt(
+            "Current Remaining Loan Amount:",
+            loan.remainingAmount
+        );
+
+
+    if (newRemaining === null) {
+
+        return;
+
+    }
+
+
+    const original =
+        Number(newOriginal);
+
+    const remaining =
+        Number(newRemaining);
+
+
+    if (
+        !newName.trim() ||
+        isNaN(original) ||
+        original < 0 ||
+        isNaN(remaining) ||
+        remaining < 0
+    ) {
+
+        alert(
+            "Invalid loan details."
+        );
+
+        return;
+
+    }
+
+
+    loan.name =
+        newName.trim();
+
+    loan.lender =
+        newLender.trim();
+
+    loan.originalAmount =
+        original;
+
+    loan.remainingAmount =
+        remaining;
+
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   DELETE LOAN
+========================================================= */
+
+function deleteLoan(loanId) {
+
+    const loan =
+        loans.find(
+            function(item) {
+                return item.id === loanId;
+            }
+        );
+
+
+    if (!loan) {
+
+        return;
+
+    }
+
+
+    if (
+        !confirm(
+            'Delete "' +
+            loan.name +
+            '" and all its EMI records?'
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    loans =
+        loans.filter(
+            function(item) {
+                return item.id !== loanId;
+            }
+        );
+
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   EXPORT DATA
+========================================================= */
+
+function exportData() {
+
+    const backup = {
+
+        app:
+            "NOVA Loan Tracker",
+
+        version:
+            1,
+
+        exportedAt:
+            new Date().toISOString(),
+
+        loans:
+            loans
+
+    };
+
+
+    const json =
+        JSON.stringify(
+            backup,
+            null,
+            2
+        );
+
+
+    const blob =
+        new Blob(
+            [json],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const a =
+        document.createElement("a");
+
+
+    const date =
+        new Date()
+            .toISOString()
+            .slice(0,10);
+
+
+    a.href = url;
+
+    a.download =
+        "loan-tracker-backup-" +
+        date +
+        ".json";
+
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+
+
+    showMessage(
+        "Backup file created."
+    );
+
+}
+
+
+/* =========================================================
+   IMPORT DATA
+========================================================= */
+
+function importData(event) {
+
+    const file =
+        event.target.files[0];
+
+
+    if (!file) {
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(e) {
+
+            try {
+
+                const data =
+                    JSON.parse(
+                        e.target.result
+                    );
+
+
+                let importedLoans = null;
+
+
+                if (
+                    Array.isArray(data)
+                ) {
+
+                    importedLoans = data;
+
+                } else if (
+                    Array.isArray(data.loans)
+                ) {
+
+                    importedLoans =
+                        data.loans;
+
+                }
+
+
+                if (!importedLoans) {
+
+                    throw new Error(
+                        "Invalid backup file"
+                    );
+
+                }
+
+
+                if (
+                    !confirm(
+                        "Restore this backup? Current data will be replaced."
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                loans =
+                    importedLoans;
+
+
+                loans.forEach(
+                    function(loan) {
+
+                        if (
+                            !Array.isArray(
+                                loan.emis
+                            )
+                        ) {
+
+                            loan.emis = [];
+
+                        }
+
+                    }
+                );
+
+
+                saveData();
+
+                renderAll();
+
+                showMessage(
+                    "Data restored successfully!"
+                );
+
+
+            } catch(error) {
+
+                console.error(error);
+
+                alert(
+                    "Invalid or damaged backup file."
+                );
+
+            }
+
+        };
+
+
+    reader.readAsText(file);
+
+
+    event.target.value = "";
+
+}
+
+
+/* =========================================================
+   DELETE ALL DATA
+========================================================= */
+
+function clearAllData() {
+
+    if (
+        !confirm(
+            "WARNING!\n\nThis will delete ALL loans and EMI records.\n\nContinue?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        !confirm(
+            "Are you absolutely sure?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    loans = [];
+
+    saveData();
+
+    renderAll();
+
+    showMessage(
+        "All data deleted."
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value || "")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
 
 </script>
 
