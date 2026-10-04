@@ -3,369 +3,271 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loan Tracker</title>
+<title>NOVA Loan & Bills Tracker</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f2f4f7;
-    color: #222;
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f6f8;
+    color:#222;
 }
 
-header {
-    background: #172b4d;
-    color: white;
-    padding: 18px 15px;
-    text-align: center;
+header{
+    background:#172b4d;
+    color:white;
+    padding:18px;
+    text-align:center;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 24px;
+header h1{
+    margin:0;
+    font-size:25px;
 }
 
-header p {
-    margin: 6px 0 0;
-    opacity: 0.85;
-    font-size: 13px;
+header p{
+    margin:6px 0 0;
+    opacity:.85;
 }
 
-.container {
-    width: 95%;
-    max-width: 900px;
-    margin: 15px auto;
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:15px;
 }
 
-.dashboard {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 15px;
+.card{
+    background:white;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
-.card {
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+.card h2{
+    margin-top:0;
+    color:#172b4d;
 }
 
-.card-title {
-    font-size: 13px;
-    color: #666;
+.month-box{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
 }
 
-.card-value {
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 5px;
+input,select,textarea,button{
+    font:inherit;
 }
 
-.section {
-    background: white;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+input,select,textarea{
+    width:100%;
+    padding:11px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    margin-top:5px;
 }
 
-.section h2 {
-    margin-top: 0;
-    font-size: 19px;
+textarea{
+    resize:vertical;
 }
 
-input,
-select,
-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 8px;
-    border-radius: 8px;
-    font-size: 15px;
+button{
+    border:0;
+    border-radius:7px;
+    padding:10px 15px;
+    cursor:pointer;
+    margin:4px 2px;
 }
 
-input,
-select {
-    border: 1px solid #ccc;
-    background: white;
+.btn{
+    background:#172b4d;
+    color:white;
 }
 
-button {
-    border: none;
-    background: #172b4d;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+.btn-green{
+    background:#198754;
+    color:white;
 }
 
-button:active {
-    transform: scale(0.98);
+.btn-red{
+    background:#dc3545;
+    color:white;
 }
 
-.btn-green {
-    background: #198754;
+.btn-orange{
+    background:#fd7e14;
+    color:white;
 }
 
-.btn-red {
-    background: #dc3545;
+.btn-blue{
+    background:#0d6efd;
+    color:white;
 }
 
-.btn-orange {
-    background: #fd7e14;
+.btn-gray{
+    background:#6c757d;
+    color:white;
 }
 
-.btn-blue {
-    background: #0d6efd;
+button:hover{
+    opacity:.85;
 }
 
-.btn-gray {
-    background: #6c757d;
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
 }
 
-.btn-purple {
-    background: #6f42c1;
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
 }
 
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+.stat{
+    padding:18px;
+    border-radius:12px;
+    background:#eef3f9;
+    text-align:center;
 }
 
-.loan {
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    margin-top: 12px;
-    overflow: hidden;
+.stat h3{
+    margin:0;
+    font-size:14px;
+    color:#555;
 }
 
-.loan-header {
-    background: #eef2f7;
-    padding: 13px;
+.stat p{
+    margin:8px 0 0;
+    font-size:23px;
+    font-weight:bold;
+    color:#172b4d;
 }
 
-.loan-name {
-    font-size: 18px;
-    font-weight: bold;
+.loan-card,
+.bill-card{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:15px;
+    margin-top:12px;
 }
 
-.loan-lender {
-    color: #666;
-    font-size: 13px;
-    margin-top: 3px;
+.loan-card h3,
+.bill-card h3{
+    margin-top:0;
 }
 
-.loan-body {
-    padding: 13px;
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    margin:2px;
 }
 
-.amount-row {
-    display: flex;
-    justify-content: space-between;
-    margin: 6px 0;
+.paid{
+    background:#d1e7dd;
+    color:#0f5132;
 }
 
-.amount-label {
-    color: #666;
+.unpaid{
+    background:#f8d7da;
+    color:#842029;
 }
 
-.amount-value {
-    font-weight: bold;
+.category{
+    background:#cff4fc;
+    color:#055160;
 }
 
-.emi-section {
-    margin-top: 12px;
-    border-top: 1px solid #ddd;
-    padding-top: 12px;
+.emi-row,
+.bill-entry{
+    border-top:1px solid #eee;
+    padding:10px 0;
 }
 
-.emi {
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 8px;
-    margin-top: 8px;
+.row-flex{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
 }
 
-.emi-paid {
-    background: #e9f7ef;
-    border-color: #198754;
+.small{
+    font-size:13px;
+    color:#666;
 }
 
-.emi-unpaid {
-    background: #fff5f5;
-    border-color: #dc3545;
+.money{
+    font-weight:bold;
+    color:#172b4d;
 }
 
-.emi-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    align-items: center;
+.progress{
+    width:100%;
+    height:9px;
+    background:#ddd;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
 }
 
-.emi-info {
-    flex: 1;
+.progress-bar{
+    height:100%;
+    background:#198754;
 }
 
-.emi-date {
-    font-weight: bold;
+canvas{
+    width:100%;
+    max-width:100%;
+    border:1px solid #eee;
+    border-radius:8px;
+    background:white;
 }
 
-.emi-amount {
-    font-size: 16px;
-    margin-top: 3px;
+.empty{
+    text-align:center;
+    color:#777;
+    padding:20px;
 }
 
-.status {
-    font-size: 12px;
-    font-weight: bold;
-    margin-top: 3px;
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
 }
 
-.paid {
-    color: #198754;
+hr{
+    border:0;
+    border-top:1px solid #eee;
+    margin:18px 0;
 }
 
-.unpaid {
-    color: #dc3545;
-}
-
-.small-buttons {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
-    margin-top: 10px;
-}
-
-.month-summary {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-top: 10px;
-}
-
-.summary-box {
-    padding: 12px;
-    background: #f5f6f8;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.summary-box strong {
-    display: block;
-    font-size: 18px;
-    margin-top: 4px;
-}
-
-.empty {
-    text-align: center;
-    color: #777;
-    padding: 20px;
-}
-
-.warning {
-    background: #fff3cd;
-    color: #664d03;
-    padding: 10px;
-    border-radius: 8px;
-    font-size: 13px;
-    margin-top: 10px;
-}
-
-.success-message {
-    display: none;
-    background: #d1e7dd;
-    color: #0f5132;
-    padding: 10px;
-    border-radius: 8px;
-    margin-top: 10px;
-}
-
-.file-buttons {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-}
-
-/* CHART */
-
-.chart-controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-}
-
-.chart-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    margin-top: 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background: white;
-}
-
-#loanChart {
-    display: block;
-    width: 100%;
-    min-width: 650px;
-    height: 360px;
-}
-
-.chart-info {
-    background: #f5f6f8;
-    border-radius: 8px;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 13px;
-}
-
-.history-list {
-    margin-top: 10px;
-    max-height: 250px;
-    overflow-y: auto;
-}
-
-.history-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px;
-    border-bottom: 1px solid #eee;
-}
-
-footer {
-    text-align: center;
-    color: #777;
-    font-size: 12px;
-    padding: 20px;
-}
-
-@media (max-width: 600px) {
-
-    .form-grid {
-        grid-template-columns: 1fr;
+@media(max-width:600px){
+    .container{
+        padding:10px;
     }
 
-    .dashboard {
-        grid-template-columns: repeat(2, 1fr);
+    .card{
+        padding:14px;
     }
 
-    .month-summary {
-        grid-template-columns: 1fr;
+    button{
+        width:auto;
     }
 
-    .small-buttons {
-        grid-template-columns: 1fr 1fr;
+    header h1{
+        font-size:21px;
     }
-
-    .chart-controls {
-        grid-template-columns: 1fr;
-    }
-
 }
 </style>
 </head>
@@ -373,920 +275,388 @@ footer {
 <body>
 
 <header>
-    <h1>💰 Loan Tracker</h1>
-    <p>Track loans, EMI dates, payments and remaining balance</p>
+    <h1>💰 NOVA Loan & Bills Tracker</h1>
+    <p>Loans • EMI • Bills • Monthly Commitments</p>
 </header>
 
 <div class="container">
 
-    <!-- DASHBOARD -->
+<!-- MONTH -->
+<div class="card">
+    <div class="section-title">
+        <h2>📅 Selected Month</h2>
+    </div>
+
+    <div class="month-box">
+        <input type="month" id="selectedMonth" style="max-width:220px;">
+        <button class="btn" onclick="changeMonth()">Load Month</button>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="card">
+    <h2>📊 Dashboard</h2>
 
     <div class="dashboard">
 
-        <div class="card">
-            <div class="card-title">Number of Loans</div>
-            <div class="card-value" id="loanCount">0</div>
+        <div class="stat">
+            <h3>Total Loans</h3>
+            <p id="statLoans">₹0</p>
         </div>
 
-        <div class="card">
-            <div class="card-title">Total Remaining Loan</div>
-            <div class="card-value" id="totalRemaining">₹0</div>
+        <div class="stat">
+            <h3>Remaining Loan</h3>
+            <p id="statRemaining">₹0</p>
         </div>
 
-        <div class="card">
-            <div class="card-title">1st – 10th EMI</div>
-            <div class="card-value" id="firstEmiTotal">₹0</div>
+        <div class="stat">
+            <h3>EMI 1–10</h3>
+            <p id="statFirstEmi">₹0</p>
         </div>
 
-        <div class="card">
-            <div class="card-title">11th – Month End EMI</div>
-            <div class="card-value" id="secondEmiTotal">₹0</div>
+        <div class="stat">
+            <h3>EMI 11–Month End</h3>
+            <p id="statSecondEmi">₹0</p>
         </div>
 
-        <div class="card">
-            <div class="card-title">Total Monthly EMI</div>
-            <div class="card-value" id="monthlyEmiTotal">₹0</div>
+        <div class="stat">
+            <h3>Total EMI</h3>
+            <p id="statTotalEmi">₹0</p>
         </div>
 
-        <div class="card">
-            <div class="card-title">Unpaid EMI</div>
-            <div class="card-value" id="unpaidTotal">₹0</div>
+        <div class="stat">
+            <h3>Total Bills</h3>
+            <p id="statBills">₹0</p>
+        </div>
+
+        <div class="stat">
+            <h3>Unpaid Bills</h3>
+            <p id="statUnpaidBills">₹0</p>
+        </div>
+
+        <div class="stat">
+            <h3>Total Commitment</h3>
+            <p id="statCommitment">₹0</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- ADD LOAN -->
+<div class="card">
+    <h2>➕ Add Loan</h2>
+
+    <div class="form-grid">
+
+        <div>
+            <label>Loan Name</label>
+            <input id="loanName" placeholder="Example: SBI Personal Loan">
+        </div>
+
+        <div>
+            <label>Lender</label>
+            <input id="loanLender" placeholder="Example: SBI">
+        </div>
+
+        <div>
+            <label>Original Amount</label>
+            <input id="loanOriginal" type="number" placeholder="500000">
+        </div>
+
+        <div>
+            <label>Current Remaining Amount</label>
+            <input id="loanRemaining" type="number" placeholder="350000">
         </div>
 
     </div>
 
+    <button class="btn-green" onclick="addLoan()">Add Loan</button>
+</div>
 
-    <!-- MONTH -->
+<!-- LOANS -->
+<div class="card">
+    <div class="section-title">
+        <h2>🏦 My Loans</h2>
+    </div>
 
-    <div class="section">
+    <div id="loanList"></div>
+</div>
 
-        <h2>📅 Select Month</h2>
+<!-- ADD BILL -->
+<div class="card">
+    <h2>🧾 Add Bill</h2>
 
-        <input
-            type="month"
-            id="selectedMonth"
-            onchange="changeMonth()"
-        >
+    <div class="form-grid">
 
-        <div class="month-summary">
+        <div>
+            <label>Bill Name</label>
+            <input id="billName" placeholder="Example: EB Bill">
+        </div>
 
-            <div class="summary-box">
-                1st – 10th
-                <strong id="salary1Total">₹0</strong>
-            </div>
+        <div>
+            <label>Category</label>
+            <select id="billCategory">
+                <option>Electricity</option>
+                <option>Mobile</option>
+                <option>Internet / Wi-Fi</option>
+                <option>Water</option>
+                <option>Gas</option>
+                <option>Insurance</option>
+                <option>Rent</option>
+                <option>Subscription</option>
+                <option>Credit Card</option>
+                <option>Other</option>
+            </select>
+        </div>
 
-            <div class="summary-box">
-                11th – Month End
-                <strong id="salary2Total">₹0</strong>
-            </div>
+        <div>
+            <label>Amount</label>
+            <input id="billAmount" type="number" placeholder="1500">
+        </div>
 
-            <div class="summary-box">
-                Total
-                <strong id="monthTotal">₹0</strong>
-            </div>
+        <div>
+            <label>Due Date</label>
+            <input id="billDueDate" type="date">
+        </div>
 
+        <div>
+            <label>Recurring Bill?</label>
+            <select id="billRecurring">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Notes</label>
+            <input id="billNotes" placeholder="Optional">
         </div>
 
     </div>
 
+    <button class="btn-green" onclick="addBill()">Add Bill</button>
+</div>
 
-    <!-- ADD LOAN -->
-
-    <div class="section">
-
-        <h2>➕ Add New Loan</h2>
-
-        <div class="form-grid">
-
-            <div>
-                <label>Loan Name</label>
-                <input
-                    type="text"
-                    id="loanName"
-                    placeholder="Example: Personal Loan"
-                >
-            </div>
-
-            <div>
-                <label>Lender / Bank</label>
-                <input
-                    type="text"
-                    id="loanLender"
-                    placeholder="Example: SBI"
-                >
-            </div>
-
-            <div>
-                <label>Original Loan Amount</label>
-                <input
-                    type="number"
-                    id="originalAmount"
-                    placeholder="Example: 500000"
-                    min="0"
-                >
-            </div>
-
-            <div>
-                <label>Current Remaining Amount</label>
-                <input
-                    type="number"
-                    id="remainingAmount"
-                    placeholder="Example: 420000"
-                    min="0"
-                >
-            </div>
-
-        </div>
-
-        <button class="btn-green" onclick="addLoan()">
-            ➕ ADD LOAN
-        </button>
-
-        <div id="message" class="success-message"></div>
-
+<!-- BILLS -->
+<div class="card">
+    <div class="section-title">
+        <h2>🧾 Bills</h2>
     </div>
 
+    <div id="billList"></div>
+</div>
 
-    <!-- ADD EMI -->
+<!-- UPCOMING PAYMENTS -->
+<div class="card">
+    <h2>⏰ Unpaid Payments</h2>
+    <div id="upcomingList"></div>
+</div>
 
-    <div class="section">
+<!-- CHART -->
+<div class="card">
 
-        <h2>💳 Add EMI</h2>
+    <h2>📈 Monthly Chart</h2>
 
-        <select id="emiLoan">
-            <option value="">Select Loan</option>
-        </select>
+    <div class="form-grid">
 
-        <div class="form-grid">
+        <div>
+            <label>Chart</label>
 
-            <div>
-                <label>EMI Date</label>
-                <input
-                    type="date"
-                    id="emiDate"
-                >
-            </div>
-
-            <div>
-                <label>EMI Amount</label>
-                <input
-                    type="number"
-                    id="emiAmount"
-                    placeholder="Example: 12500"
-                    min="0"
-                >
-            </div>
-
-        </div>
-
-        <button class="btn-blue" onclick="addEmi()">
-            ➕ ADD EMI
-        </button>
-
-        <div class="warning">
-            💡 Enter the EMI manually every month because your EMI date and amount can change.
+            <select id="chartType" onchange="drawChart()">
+                <option value="loan">Total Remaining Loan</option>
+                <option value="emi">Total EMI</option>
+                <option value="bills">Total Bills</option>
+                <option value="commitment">EMI + Bills</option>
+                <option value="paidBills">Paid Bills</option>
+                <option value="unpaidBills">Unpaid Bills</option>
+            </select>
         </div>
 
     </div>
 
+    <br>
 
-    <!-- CUSTOM CHART -->
-
-    <div class="section">
-
-        <h2>📈 Custom Loan Chart</h2>
-
-        <p style="font-size:13px;color:#666;">
-            Track how your loans are changing month by month.
-        </p>
-
-        <div class="chart-controls">
-
-            <div>
-                <label>Chart</label>
-
-                <select
-                    id="chartType"
-                    onchange="drawLoanChart()"
-                >
-
-                    <option value="remaining">
-                        Total Remaining Loan
-                    </option>
-
-                    <option value="emi">
-                        Total EMI
-                    </option>
-
-                    <option value="unpaid">
-                        Unpaid EMI
-                    </option>
-
-                    <option value="paid">
-                        Paid EMI
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div>
-                <label>View</label>
-
-                <select
-                    id="chartView"
-                    onchange="drawLoanChart()"
-                >
-
-                    <option value="total">
-                        All Loans Total
-                    </option>
-
-                    <option value="individual">
-                        Individual Loans
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-        <div class="chart-wrapper">
-
-            <canvas id="loanChart"></canvas>
-
-        </div>
-
-        <div
-            id="chartInfo"
-            class="chart-info"
-        ></div>
-
-    </div>
-
-
-    <!-- LOANS -->
-
-    <div class="section">
-
-        <h2>📋 My Loans</h2>
-
-        <div id="loansContainer"></div>
-
-    </div>
-
-
-    <!-- BACKUP -->
-
-    <div class="section">
-
-        <h2>💾 Backup & Restore</h2>
-
-        <p style="font-size:13px;color:#666;">
-            Save your loan data to a file so you can restore it later.
-        </p>
-
-        <div class="file-buttons">
-
-            <button
-                class="btn-green"
-                onclick="exportData()"
-            >
-                📥 Backup Data
-            </button>
-
-            <button
-                class="btn-blue"
-                onclick="document.getElementById('fileInput').click()"
-            >
-                📤 Restore Data
-            </button>
-
-        </div>
-
-        <input
-            type="file"
-            id="fileInput"
-            accept=".json"
-            style="display:none"
-            onchange="importData(event)"
-        >
-
-        <button
-            class="btn-gray"
-            onclick="clearAllData()"
-        >
-            🗑️ Delete All Data
-        </button>
-
-    </div>
+    <canvas id="chart" width="1000" height="420"></canvas>
 
 </div>
 
-<footer>
-    Loan Tracker • Data is stored in your browser
-</footer>
+<!-- BACKUP -->
+<div class="card">
+    <h2>💾 Backup & Restore</h2>
 
+    <button class="btn-blue" onclick="exportData()">Download Backup</button>
+
+    <input
+        type="file"
+        id="importFile"
+        accept=".json"
+        onchange="importData(event)"
+    >
+
+    <p class="small">
+        Backup contains loans, EMI records, bills and monthly history.
+    </p>
+</div>
+
+</div>
 
 <script>
 
-"use strict";
-
-
-/* =========================================================
-   STORAGE
-========================================================= */
-
-const STORAGE_KEY =
-    "NOVA_LOAN_TRACKER_V2";
+const STORAGE_KEY = "NOVA_LOAN_TRACKER_V3";
+const OLD_STORAGE_KEY = "NOVA_LOAN_TRACKER_V2";
 
 let loans = [];
-
+let bills = [];
 let selectedMonth = "";
 
 
-/* =========================================================
-   START
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        loadData();
-
-        const monthInput =
-            document.getElementById(
-                "selectedMonth"
-            );
-
-        const now =
-            new Date();
-
-        const year =
-            now.getFullYear();
-
-        const month =
-            String(
-                now.getMonth() + 1
-            ).padStart(2, "0");
-
-        selectedMonth =
-            localStorage.getItem(
-                "NOVA_SELECTED_MONTH"
-            ) ||
-            `${year}-${month}`;
-
-        monthInput.value =
-            selectedMonth;
-
-        renderAll();
-
-        drawLoanChart();
-
-    }
-);
-
-
-/* =========================================================
-   LOAD DATA
-========================================================= */
-
-function loadData() {
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                STORAGE_KEY
-            );
-
-        if (!saved) {
-
-            loans = [];
-
-            return;
-
-        }
-
-        const parsed =
-            JSON.parse(saved);
-
-        if (Array.isArray(parsed)) {
-
-            loans = parsed;
-
-        } else {
-
-            loans = [];
-
-        }
-
-        loans.forEach(
-            function(loan) {
-
-                if (!Array.isArray(loan.emis)) {
-
-                    loan.emis = [];
-
-                }
-
-                if (
-                    !loan.history ||
-                    typeof loan.history !== "object"
-                ) {
-
-                    loan.history = {};
-
-                }
-
-            }
-        );
-
-    } catch(error) {
-
-        console.error(
-            "Load error:",
-            error
-        );
-
-        loans = [];
-
-    }
-
-}
-
-
-/* =========================================================
-   SAVE
-========================================================= */
-
-function saveData() {
-
-    try {
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(loans)
-        );
-
-    } catch(error) {
-
-        alert(
-            "Unable to save data."
-        );
-
-        console.error(error);
-
-    }
-
-}
-
-
-/* =========================================================
-   MONEY
-========================================================= */
-
-function money(amount) {
-
-    const number =
-        Number(amount) || 0;
-
-    return (
-        "₹" +
-        number.toLocaleString(
-            "en-IN",
-            {
-                maximumFractionDigits: 2
-            }
-        )
-    );
-
-}
-
-
-/* =========================================================
-   ADD MONTH HISTORY
-========================================================= */
-
-function saveLoanHistory(
-    loan,
-    month
-) {
-
-    if (
-        !loan.history ||
-        typeof loan.history !== "object"
-    ) {
-
-        loan.history = {};
-
-    }
-
-    loan.history[month] =
-        Number(
-            loan.remainingAmount
-        ) || 0;
-
-}
-
-
-/* =========================================================
-   ADD LOAN
-========================================================= */
-
-function addLoan() {
-
-    try {
-
-        const name =
-            document.getElementById(
-                "loanName"
-            ).value.trim();
-
-        const lender =
-            document.getElementById(
-                "loanLender"
-            ).value.trim();
-
-        const originalAmount =
-            Number(
-                document.getElementById(
-                    "originalAmount"
-                ).value
-            );
-
-        const remainingAmount =
-            Number(
-                document.getElementById(
-                    "remainingAmount"
-                ).value
-            );
-
-
-        if (!name) {
-
-            alert(
-                "Please enter Loan Name."
-            );
-
-            return;
-
-        }
-
-
-        if (
-            isNaN(originalAmount) ||
-            originalAmount < 0
-        ) {
-
-            alert(
-                "Please enter a valid Original Loan Amount."
-            );
-
-            return;
-
-        }
-
-
-        if (
-            isNaN(remainingAmount) ||
-            remainingAmount < 0
-        ) {
-
-            alert(
-                "Please enter a valid Remaining Loan Amount."
-            );
-
-            return;
-
-        }
-
-
-        const newLoan = {
-
-            id:
-                Date.now().toString() +
-                "_" +
-                Math.random()
-                    .toString(36)
-                    .substring(2,9),
-
-            name:
-                name,
-
-            lender:
-                lender,
-
-            originalAmount:
-                originalAmount,
-
-            remainingAmount:
-                remainingAmount,
-
-            history: {},
-
-            emis: []
-
-        };
-
-
-        /*
-         * Save the current remaining amount
-         * against the selected month.
-         */
-
-        saveLoanHistory(
-            newLoan,
-            selectedMonth
-        );
-
-
-        loans.push(
-            newLoan
-        );
-
-
-        saveData();
-
-        clearLoanForm();
-
-        renderAll();
-
-        drawLoanChart();
-
-        showMessage(
-            "Loan added successfully!"
-        );
-
-    } catch(error) {
-
-        console.error(error);
-
-        alert(
-            "Something went wrong while adding the loan."
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   CLEAR FORM
-========================================================= */
-
-function clearLoanForm() {
-
-    document.getElementById(
-        "loanName"
-    ).value = "";
-
-    document.getElementById(
-        "loanLender"
-    ).value = "";
-
-    document.getElementById(
-        "originalAmount"
-    ).value = "";
-
-    document.getElementById(
-        "remainingAmount"
-    ).value = "";
-
-}
-
-
-/* =========================================================
-   MESSAGE
-========================================================= */
-
-function showMessage(message) {
-
-    const box =
-        document.getElementById(
-            "message"
-        );
-
-    box.textContent =
-        message;
-
-    box.style.display =
-        "block";
-
-    setTimeout(
-        function() {
-
-            box.style.display =
-                "none";
-
-        },
-        2500
-    );
-
-}
-
-
-/* =========================================================
-   UPDATE LOAN SELECT
-========================================================= */
-
-function updateLoanSelect() {
-
-    const select =
-        document.getElementById(
-            "emiLoan"
-        );
-
-    select.innerHTML =
-        '<option value="">Select Loan</option>';
-
-
-    loans.forEach(
-        function(loan) {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-            option.value =
-                loan.id;
-
-            option.textContent =
-                loan.name +
-                (
-                    loan.lender
-                        ? " - " +
-                          loan.lender
-                        : ""
-                );
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   ADD EMI
-========================================================= */
-
-function addEmi() {
-
-    const loanId =
-        document.getElementById(
-            "emiLoan"
-        ).value;
-
-    const date =
-        document.getElementById(
-            "emiDate"
-        ).value;
-
-    const amount =
-        Number(
-            document.getElementById(
-                "emiAmount"
-            ).value
-        );
-
-
-    if (!loanId) {
-
-        alert(
-            "Please select a loan."
-        );
-
-        return;
-
-    }
-
-
-    if (!date) {
-
-        alert(
-            "Please select EMI date."
-        );
-
-        return;
-
-    }
-
-
-    if (
-        isNaN(amount) ||
-        amount <= 0
-    ) {
-
-        alert(
-            "Please enter a valid EMI amount."
-        );
-
-        return;
-
-    }
-
-
-    const loan =
-        loans.find(
-            function(item) {
-
-                return (
-                    item.id ===
-                    loanId
-                );
-
-            }
-        );
-
-
-    if (!loan) {
-
-        alert(
-            "Loan not found."
-        );
-
-        return;
-
-    }
-
-
-    if (!Array.isArray(loan.emis)) {
-
-        loan.emis = [];
-
-    }
-
-
-    loan.emis.push({
-
-        id:
-            Date.now().toString() +
-            "_" +
-            Math.random()
-                .toString(36)
-                .substring(2,9),
-
-        date:
-            date,
-
-        amount:
-            amount,
-
-        paid:
-            false
-
+/* =========================
+   BASIC FUNCTIONS
+========================= */
+
+function money(value){
+    return "₹" + Number(value || 0).toLocaleString("en-IN",{
+        maximumFractionDigits:2
     });
+}
 
+function generateId(){
+    return Date.now().toString() + Math.random().toString(36).substring(2);
+}
 
-    loan.emis.sort(
-        function(a,b) {
+function currentMonth(){
+    return new Date().toISOString().slice(0,7);
+}
 
-            return a.date.localeCompare(
-                b.date
-            );
+function formatDate(date){
+    if(!date) return "-";
 
-        }
-    );
+    const d = new Date(date + "T00:00:00");
 
+    return d.toLocaleDateString("en-IN",{
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
+    });
+}
 
-    saveData();
+function formatMonth(month){
+    if(!month) return "";
 
-    document.getElementById(
-        "emiDate"
-    ).value = "";
+    const d = new Date(month + "-01");
 
-    document.getElementById(
-        "emiAmount"
-    ).value = "";
-
-    renderAll();
-
-    drawLoanChart();
-
-    showMessage(
-        "EMI added successfully!"
-    );
-
+    return d.toLocaleDateString("en-IN",{
+        month:"long",
+        year:"numeric"
+    });
 }
 
 
-/* =========================================================
-   CHANGE MONTH
-========================================================= */
+/* =========================
+   LOAD DATA
+========================= */
 
-function changeMonth() {
+function loadData(){
+
+    const newData = localStorage.getItem(STORAGE_KEY);
+
+    if(newData){
+
+        try{
+
+            const parsed = JSON.parse(newData);
+
+            loans = Array.isArray(parsed.loans)
+                ? parsed.loans
+                : [];
+
+            bills = Array.isArray(parsed.bills)
+                ? parsed.bills
+                : [];
+
+            return;
+
+        }catch(e){
+
+            console.log("New data error",e);
+
+        }
+    }
+
+
+    /*
+       Migrate old V2 loan data
+    */
+
+    const oldData = localStorage.getItem(OLD_STORAGE_KEY);
+
+    if(oldData){
+
+        try{
+
+            const oldLoans = JSON.parse(oldData);
+
+            if(Array.isArray(oldLoans)){
+
+                loans = oldLoans;
+                bills = [];
+
+                saveData();
+
+                alert(
+                    "Your old loan data was successfully migrated.\n\n" +
+                    "Your existing loans are safe."
+                );
+
+                return;
+            }
+
+        }catch(e){
+
+            console.log("Old data error",e);
+
+        }
+    }
+
+    loans = [];
+    bills = [];
+}
+
+
+/* =========================
+   SAVE DATA
+========================= */
+
+function saveData(){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+            version:3,
+            loans:loans,
+            bills:bills
+        })
+    );
+
+    localStorage.setItem(
+        "NOVA_SELECTED_MONTH",
+        selectedMonth
+    );
+}
+
+
+/* =========================
+   MONTH
+========================= */
+
+function changeMonth(){
 
     selectedMonth =
-        document.getElementById(
-            "selectedMonth"
-        ).value;
+        document.getElementById("selectedMonth").value;
+
+    if(!selectedMonth){
+        selectedMonth = currentMonth();
+    }
 
     localStorage.setItem(
         "NOVA_SELECTED_MONTH",
@@ -1294,1275 +664,1426 @@ function changeMonth() {
     );
 
     renderAll();
-
-    drawLoanChart();
-
 }
 
 
-/* =========================================================
-   EMI GROUP
-========================================================= */
+/* =========================
+   LOANS
+========================= */
 
-function getEmiGroup(dateString) {
+function addLoan(){
 
-    const day =
-        Number(
-            dateString.substring(
-                8,
-                10
-            )
-        );
+    const name =
+        document.getElementById("loanName").value.trim();
 
-    if (
-        day >= 1 &&
-        day <= 10
-    ) {
+    const lender =
+        document.getElementById("loanLender").value.trim();
 
-        return "first";
+    const original =
+        Number(document.getElementById("loanOriginal").value);
+
+    const remaining =
+        Number(document.getElementById("loanRemaining").value);
+
+    if(!name){
+
+        alert("Enter loan name.");
+        return;
 
     }
 
-    return "second";
+    if(!original || original < 0){
 
-}
+        alert("Enter valid original amount.");
+        return;
+
+    }
+
+    if(remaining < 0 || isNaN(remaining)){
+
+        alert("Enter valid remaining amount.");
+        return;
+
+    }
 
 
-/* =========================================================
-   MONTH EMIS
-========================================================= */
+    const loan = {
 
-function getMonthEmis() {
+        id:generateId(),
 
-    const result = {
+        name:name,
 
-        first: [],
+        lender:lender,
 
-        second: []
+        originalAmount:original,
+
+        remainingAmount:remaining,
+
+        history:{},
+
+        emis:[]
 
     };
 
 
-    loans.forEach(
-        function(loan) {
+    loan.history[selectedMonth] = remaining;
 
-            if (
-                !Array.isArray(
-                    loan.emis
-                )
-            ) {
+    loans.push(loan);
 
-                return;
+    saveData();
 
-            }
+    document.getElementById("loanName").value="";
+    document.getElementById("loanLender").value="";
+    document.getElementById("loanOriginal").value="";
+    document.getElementById("loanRemaining").value="";
 
+    renderAll();
 
-            loan.emis.forEach(
-                function(emi) {
-
-                    if (
-                        emi.date &&
-                        emi.date.substring(
-                            0,
-                            7
-                        ) ===
-                        selectedMonth
-                    ) {
-
-                        const group =
-                            getEmiGroup(
-                                emi.date
-                            );
-
-                        result[group]
-                            .push({
-
-                                loan:
-                                    loan,
-
-                                emi:
-                                    emi
-
-                            });
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-    return result;
+    alert("Loan added successfully.");
 
 }
 
 
-/* =========================================================
-   DASHBOARD
-========================================================= */
+function saveLoanHistory(loan){
 
-function updateDashboard() {
-
-    let totalRemaining = 0;
-
-    loans.forEach(
-        function(loan) {
-
-            totalRemaining +=
-                Number(
-                    loan.remainingAmount
-                ) || 0;
-
-        }
-    );
-
-
-    const monthEmis =
-        getMonthEmis();
-
-
-    let firstTotal = 0;
-
-    let secondTotal = 0;
-
-    let unpaidTotal = 0;
-
-
-    monthEmis.first.forEach(
-        function(item) {
-
-            firstTotal +=
-                Number(
-                    item.emi.amount
-                ) || 0;
-
-            if (
-                !item.emi.paid
-            ) {
-
-                unpaidTotal +=
-                    Number(
-                        item.emi.amount
-                    ) || 0;
-
-            }
-
-        }
-    );
-
-
-    monthEmis.second.forEach(
-        function(item) {
-
-            secondTotal +=
-                Number(
-                    item.emi.amount
-                ) || 0;
-
-            if (
-                !item.emi.paid
-            ) {
-
-                unpaidTotal +=
-                    Number(
-                        item.emi.amount
-                    ) || 0;
-
-            }
-
-        }
-    );
-
-
-    document.getElementById(
-        "loanCount"
-    ).textContent =
-        loans.length;
-
-
-    document.getElementById(
-        "totalRemaining"
-    ).textContent =
-        money(
-            totalRemaining
-        );
-
-
-    document.getElementById(
-        "firstEmiTotal"
-    ).textContent =
-        money(
-            firstTotal
-        );
-
-
-    document.getElementById(
-        "secondEmiTotal"
-    ).textContent =
-        money(
-            secondTotal
-        );
-
-
-    document.getElementById(
-        "monthlyEmiTotal"
-    ).textContent =
-        money(
-            firstTotal +
-            secondTotal
-        );
-
-
-    document.getElementById(
-        "unpaidTotal"
-    ).textContent =
-        money(
-            unpaidTotal
-        );
-
-
-    document.getElementById(
-        "salary1Total"
-    ).textContent =
-        money(
-            firstTotal
-        );
-
-
-    document.getElementById(
-        "salary2Total"
-    ).textContent =
-        money(
-            secondTotal
-        );
-
-
-    document.getElementById(
-        "monthTotal"
-    ).textContent =
-        money(
-            firstTotal +
-            secondTotal
-        );
-
-}
-
-
-/* =========================================================
-   RENDER
-========================================================= */
-
-function renderAll() {
-
-    updateLoanSelect();
-
-    updateDashboard();
-
-    renderLoans();
-
-}
-
-
-/* =========================================================
-   RENDER LOANS
-========================================================= */
-
-function renderLoans() {
-
-    const container =
-        document.getElementById(
-            "loansContainer"
-        );
-
-    container.innerHTML = "";
-
-
-    if (
-        loans.length === 0
-    ) {
-
-        container.innerHTML =
-            '<div class="empty">' +
-            'No loans added yet.' +
-            '<br><br>' +
-            'Use "Add New Loan" above.' +
-            '</div>';
-
-        return;
-
+    if(!loan.history){
+        loan.history = {};
     }
 
-
-    loans.forEach(
-        function(loan) {
-
-            if (
-                !Array.isArray(
-                    loan.emis
-                )
-            ) {
-
-                loan.emis = [];
-
-            }
-
-
-            if (
-                !loan.history
-            ) {
-
-                loan.history = {};
-
-            }
-
-
-            const loanDiv =
-                document.createElement(
-                    "div"
-                );
-
-            loanDiv.className =
-                "loan";
-
-
-            let emiHTML = "";
-
-
-            const monthEmis =
-                loan.emis.filter(
-                    function(emi) {
-
-                        return (
-                            emi.date &&
-                            emi.date.substring(
-                                0,
-                                7
-                            ) ===
-                            selectedMonth
-                        );
-
-                    }
-                );
-
-
-            if (
-                monthEmis.length === 0
-            ) {
-
-                emiHTML =
-                    '<div style="color:#777;font-size:13px;">' +
-                    'No EMI entered for this month.' +
-                    '</div>';
-
-            } else {
-
-                monthEmis.forEach(
-                    function(emi) {
-
-                        const group =
-                            getEmiGroup(
-                                emi.date
-                            );
-
-                        const groupText =
-                            group === "first"
-                                ? "1st–10th"
-                                : "11th–Month End";
-
-
-                        emiHTML +=
-
-                            '<div class="emi ' +
-                            (
-                                emi.paid
-                                    ? "emi-paid"
-                                    : "emi-unpaid"
-                            ) +
-                            '">' +
-
-                            '<div class="emi-row">' +
-
-                            '<div class="emi-info">' +
-
-                            '<div class="emi-date">' +
-                            formatDate(
-                                emi.date
-                            ) +
-                            '</div>' +
-
-                            '<div style="font-size:12px;color:#666;">' +
-                            groupText +
-                            '</div>' +
-
-                            '<div class="emi-amount">' +
-                            money(
-                                emi.amount
-                            ) +
-                            '</div>' +
-
-                            '<div class="status ' +
-                            (
-                                emi.paid
-                                    ? "paid"
-                                    : "unpaid"
-                            ) +
-                            '">' +
-                            (
-                                emi.paid
-                                    ? "✓ PAID"
-                                    : "✗ UNPAID"
-                            ) +
-                            '</div>' +
-
-                            '</div>' +
-
-                            '<div style="width:100px;">' +
-
-                            '<button class="' +
-                            (
-                                emi.paid
-                                    ? "btn-orange"
-                                    : "btn-green"
-                            ) +
-                            '" onclick="toggleEmi(\'' +
-                            loan.id +
-                            '\',\'' +
-                            emi.id +
-                            '\')">' +
-                            (
-                                emi.paid
-                                    ? "Mark Unpaid"
-                                    : "Mark Paid"
-                            ) +
-                            '</button>' +
-
-                            '</div>' +
-
-                            '</div>' +
-
-                            '<div class="small-buttons">' +
-
-                            '<button class="btn-blue" onclick="editEmi(\'' +
-                            loan.id +
-                            '\',\'' +
-                            emi.id +
-                            '\')">' +
-                            '✏️ Edit' +
-                            '</button>' +
-
-                            '<button class="btn-red" onclick="deleteEmi(\'' +
-                            loan.id +
-                            '\',\'' +
-                            emi.id +
-                            '\')">' +
-                            '🗑️ Delete' +
-                            '</button>' +
-
-                            '</div>' +
-
-                            '</div>';
-
-                    }
-                );
-
-            }
-
-
-            loanDiv.innerHTML =
-
-                '<div class="loan-header">' +
-
-                '<div class="loan-name">' +
-                escapeHTML(
-                    loan.name
-                ) +
-                '</div>' +
-
-                '<div class="loan-lender">' +
-                (
-                    loan.lender
-                        ? escapeHTML(
-                            loan.lender
-                          )
-                        : "Lender not entered"
-                ) +
-                '</div>' +
-
-                '</div>' +
-
-
-                '<div class="loan-body">' +
-
-                '<div class="amount-row">' +
-
-                '<span class="amount-label">' +
-                'Original Loan' +
-                '</span>' +
-
-                '<span class="amount-value">' +
-                money(
-                    loan.originalAmount
-                ) +
-                '</span>' +
-
-                '</div>' +
-
-
-                '<div class="amount-row">' +
-
-                '<span class="amount-label">' +
-                'Remaining Loan' +
-                '</span>' +
-
-                '<span class="amount-value">' +
-                money(
-                    loan.remainingAmount
-                ) +
-                '</span>' +
-
-                '</div>' +
-
-
-                '<div class="small-buttons">' +
-
-                '<button class="btn-blue" onclick="editLoan(\'' +
-                loan.id +
-                '\')">' +
-                '✏️ Edit Loan' +
-                '</button>' +
-
-                '<button class="btn-red" onclick="deleteLoan(\'' +
-                loan.id +
-                '\')">' +
-                '🗑️ Delete Loan' +
-                '</button>' +
-
-                '</div>' +
-
-
-                '<div class="emi-section">' +
-
-                '<strong>EMI for ' +
-                formatMonth(
-                    selectedMonth
-                ) +
-                '</strong>' +
-
-                emiHTML +
-
-                '</div>' +
-
-                '</div>';
-
-
-            container.appendChild(
-                loanDiv
-            );
-
-        }
-    );
-
+    loan.history[selectedMonth] =
+        Number(loan.remainingAmount || 0);
 }
 
 
-/* =========================================================
-   FORMAT DATE
-========================================================= */
-
-function formatDate(dateString) {
-
-    if (!dateString) {
-
-        return "";
-
-    }
-
-    const parts =
-        dateString.split("-");
-
-    if (
-        parts.length !== 3
-    ) {
-
-        return dateString;
-
-    }
-
-    return (
-        parts[2] +
-        "-" +
-        parts[1] +
-        "-" +
-        parts[0]
-    );
-
-}
-
-
-/* =========================================================
-   FORMAT MONTH
-========================================================= */
-
-function formatMonth(monthString) {
-
-    if (!monthString) {
-
-        return "";
-
-    }
-
-    const parts =
-        monthString.split("-");
-
-    if (
-        parts.length !== 2
-    ) {
-
-        return monthString;
-
-    }
-
-    const date =
-        new Date(
-            Number(parts[0]),
-            Number(parts[1]) - 1,
-            1
-        );
-
-    return date.toLocaleString(
-        "en-IN",
-        {
-            month: "long",
-            year: "numeric"
-        }
-    );
-
-}
-
-
-/* =========================================================
-   TOGGLE EMI
-========================================================= */
-
-function toggleEmi(
-    loanId,
-    emiId
-) {
+function editLoan(id){
 
     const loan =
-        loans.find(
-            function(item) {
+        loans.find(x => x.id === id);
 
-                return (
-                    item.id ===
-                    loanId
-                );
+    if(!loan) return;
 
-            }
+
+    const newRemaining =
+        prompt(
+            "Enter current remaining loan amount:",
+            loan.remainingAmount
         );
 
+    if(newRemaining === null) return;
 
-    if (!loan) {
 
+    const amount = Number(newRemaining);
+
+    if(isNaN(amount) || amount < 0){
+
+        alert("Invalid amount.");
         return;
 
     }
+
+
+    loan.remainingAmount = amount;
+
+    saveLoanHistory(loan);
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+function deleteLoan(id){
+
+    const loan =
+        loans.find(x => x.id === id);
+
+    if(!loan) return;
+
+
+    if(!confirm(
+        "Delete " + loan.name + "?\n\n" +
+        "This will delete the loan and all its EMI records."
+    )){
+        return;
+    }
+
+
+    loans =
+        loans.filter(x => x.id !== id);
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+/* =========================
+   EMI
+========================= */
+
+function getEmiGroup(date){
+
+    const day =
+        new Date(date + "T00:00:00").getDate();
+
+    return day <= 10
+        ? "first"
+        : "second";
+}
+
+
+function addEmi(loanId){
+
+    const date =
+        prompt(
+            "Enter EMI date (YYYY-MM-DD):",
+            selectedMonth + "-05"
+        );
+
+    if(!date) return;
+
+
+    const amount =
+        Number(
+            prompt("Enter EMI amount:", "0")
+        );
+
+
+    if(isNaN(amount) || amount <= 0){
+
+        alert("Invalid EMI amount.");
+        return;
+
+    }
+
+
+    const loan =
+        loans.find(x => x.id === loanId);
+
+    if(!loan) return;
+
+
+    if(!loan.emis){
+        loan.emis=[];
+    }
+
+
+    loan.emis.push({
+
+        id:generateId(),
+
+        date:date,
+
+        amount:amount,
+
+        paid:false
+
+    });
+
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+function toggleEmi(loanId,emiId){
+
+    const loan =
+        loans.find(x => x.id === loanId);
+
+    if(!loan) return;
 
 
     const emi =
-        loan.emis.find(
-            function(item) {
+        loan.emis.find(x => x.id === emiId);
 
-                return (
-                    item.id ===
-                    emiId
-                );
-
-            }
-        );
-
-
-    if (!emi) {
-
-        return;
-
-    }
+    if(!emi) return;
 
 
     emi.paid =
         !emi.paid;
 
-
     saveData();
 
     renderAll();
 
-    drawLoanChart();
-
 }
 
 
-/* =========================================================
-   EDIT EMI
-========================================================= */
-
-function editEmi(
-    loanId,
-    emiId
-) {
+function editEmi(loanId,emiId){
 
     const loan =
-        loans.find(
-            function(item) {
+        loans.find(x => x.id === loanId);
 
-                return (
-                    item.id ===
-                    loanId
-                );
-
-            }
-        );
-
-
-    if (!loan) {
-
-        return;
-
-    }
+    if(!loan) return;
 
 
     const emi =
-        loan.emis.find(
-            function(item) {
+        loan.emis.find(x => x.id === emiId);
 
-                return (
-                    item.id ===
-                    emiId
-                );
-
-            }
-        );
+    if(!emi) return;
 
 
-    if (!emi) {
-
-        return;
-
-    }
-
-
-    const newDate =
+    const date =
         prompt(
-            "Enter EMI date (YYYY-MM-DD):",
+            "EMI Date (YYYY-MM-DD):",
             emi.date
         );
 
-
-    if (
-        newDate === null
-    ) {
-
-        return;
-
-    }
-
-
-    const newAmount =
-        prompt(
-            "Enter EMI amount:",
-            emi.amount
-        );
-
-
-    if (
-        newAmount === null
-    ) {
-
-        return;
-
-    }
+    if(!date) return;
 
 
     const amount =
         Number(
-            newAmount
+            prompt(
+                "EMI Amount:",
+                emi.amount
+            )
         );
 
 
-    if (
-        !newDate ||
-        isNaN(amount) ||
-        amount <= 0
-    ) {
+    if(isNaN(amount) || amount <= 0){
 
-        alert(
-            "Invalid EMI details."
-        );
-
+        alert("Invalid amount.");
         return;
 
     }
 
 
-    emi.date =
-        newDate;
-
-    emi.amount =
-        amount;
-
+    emi.date=date;
+    emi.amount=amount;
 
     saveData();
 
     renderAll();
 
-    drawLoanChart();
-
 }
 
 
-/* =========================================================
-   DELETE EMI
-========================================================= */
+function deleteEmi(loanId,emiId){
 
-function deleteEmi(
-    loanId,
-    emiId
-) {
-
-    if (
-        !confirm(
-            "Delete this EMI?"
-        )
-    ) {
-
+    if(!confirm("Delete this EMI?")){
         return;
-
     }
 
 
     const loan =
-        loans.find(
-            function(item) {
+        loans.find(x => x.id === loanId);
 
-                return (
-                    item.id ===
-                    loanId
-                );
-
-            }
-        );
-
-
-    if (!loan) {
-
-        return;
-
-    }
+    if(!loan) return;
 
 
     loan.emis =
         loan.emis.filter(
-            function(emi) {
-
-                return (
-                    emi.id !==
-                    emiId
-                );
-
-            }
+            x => x.id !== emiId
         );
-
 
     saveData();
 
     renderAll();
 
-    drawLoanChart();
+}
+
+
+/* =========================
+   BILLS
+========================= */
+
+function addBill(){
+
+    const name =
+        document.getElementById("billName").value.trim();
+
+    const category =
+        document.getElementById("billCategory").value;
+
+    const amount =
+        Number(document.getElementById("billAmount").value);
+
+    const dueDate =
+        document.getElementById("billDueDate").value;
+
+    const recurring =
+        document.getElementById("billRecurring").value === "yes";
+
+    const notes =
+        document.getElementById("billNotes").value.trim();
+
+
+    if(!name){
+
+        alert("Enter bill name.");
+        return;
+
+    }
+
+    if(!amount || amount <= 0){
+
+        alert("Enter valid bill amount.");
+        return;
+
+    }
+
+    if(!dueDate){
+
+        alert("Select due date.");
+        return;
+
+    }
+
+
+    const bill = {
+
+        id:generateId(),
+
+        name:name,
+
+        category:category,
+
+        recurring:recurring,
+
+        notes:notes,
+
+        entries:[]
+
+    };
+
+
+    bill.entries.push({
+
+        id:generateId(),
+
+        month:dueDate.slice(0,7),
+
+        amount:amount,
+
+        dueDate:dueDate,
+
+        paid:false,
+
+        notes:notes
+
+    });
+
+
+    bills.push(bill);
+
+    saveData();
+
+    document.getElementById("billName").value="";
+    document.getElementById("billAmount").value="";
+    document.getElementById("billDueDate").value="";
+    document.getElementById("billNotes").value="";
+
+    renderAll();
+
+    alert("Bill added successfully.");
 
 }
 
 
-/* =========================================================
-   EDIT LOAN
-========================================================= */
+/*
+   Get bill entry for selected month
+*/
 
-function editLoan(
-    loanId
-) {
+function getBillEntry(bill){
 
-    const loan =
-        loans.find(
-            function(item) {
+    if(!bill.entries) return null;
 
-                return (
-                    item.id ===
-                    loanId
-                );
-
-            }
-        );
-
-
-    if (!loan) {
-
-        return;
-
-    }
-
-
-    const newName =
-        prompt(
-            "Loan Name:",
-            loan.name
-        );
-
-
-    if (
-        newName === null
-    ) {
-
-        return;
-
-    }
-
-
-    const newLender =
-        prompt(
-            "Lender / Bank:",
-            loan.lender || ""
-        );
-
-
-    if (
-        newLender === null
-    ) {
-
-        return;
-
-    }
-
-
-    const newOriginal =
-        prompt(
-            "Original Loan Amount:",
-            loan.originalAmount
-        );
-
-
-    if (
-        newOriginal === null
-    ) {
-
-        return;
-
-    }
-
-
-    const newRemaining =
-        prompt(
-            "Current Remaining Loan Amount:",
-            loan.remainingAmount
-        );
-
-
-    if (
-        newRemaining === null
-    ) {
-
-        return;
-
-    }
-
-
-    const original =
-        Number(
-            newOriginal
-        );
-
-    const remaining =
-        Number(
-            newRemaining
-        );
-
-
-    if (
-        !newName.trim() ||
-        isNaN(original) ||
-        original < 0 ||
-        isNaN(remaining) ||
-        remaining < 0
-    ) {
-
-        alert(
-            "Invalid loan details."
-        );
-
-        return;
-
-    }
-
-
-    loan.name =
-        newName.trim();
-
-    loan.lender =
-        newLender.trim();
-
-    loan.originalAmount =
-        original;
-
-    loan.remainingAmount =
-        remaining;
-
-
-    /*
-     * IMPORTANT:
-     * Save this month's balance
-     * for the chart.
-     */
-
-    saveLoanHistory(
-        loan,
-        selectedMonth
+    return bill.entries.find(
+        x => x.month === selectedMonth
     );
+}
+
+
+/*
+   Add/update a monthly bill entry
+*/
+
+function addBillEntry(billId){
+
+    const bill =
+        bills.find(x => x.id === billId);
+
+    if(!bill) return;
+
+
+    const existing =
+        getBillEntry(bill);
+
+
+    let defaultDate =
+        existing?.dueDate ||
+        selectedMonth + "-10";
+
+
+    const date =
+        prompt(
+            "Enter due date (YYYY-MM-DD):",
+            defaultDate
+        );
+
+    if(!date) return;
+
+
+    const amount =
+        Number(
+            prompt(
+                "Enter bill amount:",
+                existing?.amount || "0"
+            )
+        );
+
+
+    if(isNaN(amount) || amount <= 0){
+
+        alert("Invalid amount.");
+        return;
+
+    }
+
+
+    if(existing){
+
+        existing.amount=amount;
+
+        existing.dueDate=date;
+
+        existing.notes=bill.notes || "";
+
+    }else{
+
+        bill.entries.push({
+
+            id:generateId(),
+
+            month:selectedMonth,
+
+            amount:amount,
+
+            dueDate:date,
+
+            paid:false,
+
+            notes:bill.notes || ""
+
+        });
+
+    }
 
 
     saveData();
 
     renderAll();
 
-    drawLoanChart();
-
 }
 
 
-/* =========================================================
-   DELETE LOAN
-========================================================= */
+function toggleBill(billId,entryId){
 
-function deleteLoan(
-    loanId
-) {
+    const bill =
+        bills.find(x => x.id === billId);
 
-    const loan =
-        loans.find(
-            function(item) {
-
-                return (
-                    item.id ===
-                    loanId
-                );
-
-            }
-        );
+    if(!bill) return;
 
 
-    if (!loan) {
+    const entry =
+        bill.entries.find(x => x.id === entryId);
 
-        return;
-
-    }
-
-
-    if (
-        !confirm(
-            'Delete "' +
-            loan.name +
-            '" and all its EMI records?'
-        )
-    ) {
-
-        return;
-
-    }
+    if(!entry) return;
 
 
-    loans =
-        loans.filter(
-            function(item) {
-
-                return (
-                    item.id !==
-                    loanId
-                );
-
-            }
-        );
-
+    entry.paid =
+        !entry.paid;
 
     saveData();
 
     renderAll();
 
-    drawLoanChart();
+}
+
+
+function editBill(billId){
+
+    const bill =
+        bills.find(x => x.id === billId);
+
+    if(!bill) return;
+
+
+    const name =
+        prompt(
+            "Bill name:",
+            bill.name
+        );
+
+    if(name === null) return;
+
+
+    const category =
+        prompt(
+            "Category:",
+            bill.category
+        );
+
+    if(category === null) return;
+
+
+    bill.name=name;
+    bill.category=category;
+
+    saveData();
+
+    renderAll();
 
 }
 
 
-/* =========================================================
-   GET MONTHS FOR CHART
-========================================================= */
+function deleteBill(billId){
 
-function getChartMonths() {
-
-    const months =
-        new Set();
-
-
-    loans.forEach(
-        function(loan) {
-
-            if (
-                loan.history
-            ) {
-
-                Object.keys(
-                    loan.history
-                ).forEach(
-                    function(month) {
-
-                        months.add(
-                            month
-                        );
-
-                    }
-                );
-
-            }
+    if(!confirm(
+        "Delete this bill and all its monthly records?"
+    )){
+        return;
+    }
 
 
-            if (
-                Array.isArray(
-                    loan.emis
+    bills =
+        bills.filter(
+            x => x.id !== billId
+        );
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+function deleteBillEntry(billId,entryId){
+
+    if(!confirm(
+        "Delete this month's bill entry?"
+    )){
+        return;
+    }
+
+
+    const bill =
+        bills.find(x => x.id === billId);
+
+    if(!bill) return;
+
+
+    bill.entries =
+        bill.entries.filter(
+            x => x.id !== entryId
+        );
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+/* =========================
+   RENDER LOANS
+========================= */
+
+function renderLoans(){
+
+    const container =
+        document.getElementById("loanList");
+
+    if(loans.length === 0){
+
+        container.innerHTML =
+            `<div class="empty">
+                No loans added yet.
+            </div>`;
+
+        return;
+
+    }
+
+
+    let html="";
+
+
+    loans.forEach(loan => {
+
+        const percent =
+            loan.originalAmount > 0
+            ? Math.max(
+                0,
+                Math.min(
+                    100,
+                    ((loan.originalAmount -
+                    loan.remainingAmount) /
+                    loan.originalAmount) * 100
                 )
-            ) {
+            )
+            : 0;
 
-                loan.emis.forEach(
-                    function(emi) {
 
-                        if (
-                            emi.date
-                        ) {
+        let emis =
+            (loan.emis || [])
+            .filter(
+                emi =>
+                emi.date &&
+                emi.date.startsWith(selectedMonth)
+            );
 
-                            months.add(
-                                emi.date.substring(
-                                    0,
-                                    7
-                                )
-                            );
 
-                        }
+        let firstTotal=0;
+        let secondTotal=0;
 
+
+        emis.forEach(emi => {
+
+            if(getEmiGroup(emi.date)==="first"){
+                firstTotal += Number(emi.amount);
+            }else{
+                secondTotal += Number(emi.amount);
+            }
+
+        });
+
+
+        html += `
+
+        <div class="loan-card">
+
+            <div class="row-flex">
+
+                <div>
+                    <h3>${escapeHtml(loan.name)}</h3>
+
+                    <div class="small">
+                        ${escapeHtml(loan.lender || "Lender not specified")}
+                    </div>
+                </div>
+
+                <div>
+                    <button
+                        class="btn-orange"
+                        onclick="editLoan('${loan.id}')">
+                        Edit Balance
+                    </button>
+
+                    <button
+                        class="btn-red"
+                        onclick="deleteLoan('${loan.id}')">
+                        Delete
+                    </button>
+                </div>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="form-grid">
+
+                <div>
+                    <div class="small">
+                        Original Loan
+                    </div>
+
+                    <div class="money">
+                        ${money(loan.originalAmount)}
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="small">
+                        Remaining
+                    </div>
+
+                    <div class="money">
+                        ${money(loan.remainingAmount)}
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="small">
+                        Paid So Far
+                    </div>
+
+                    <div class="money">
+                        ${money(
+                            loan.originalAmount -
+                            loan.remainingAmount
+                        )}
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="progress">
+
+                <div
+                    class="progress-bar"
+                    style="width:${percent}%">
+                </div>
+
+            </div>
+
+
+            <p class="small">
+                ${percent.toFixed(1)}% of original loan cleared
+            </p>
+
+
+            <hr>
+
+
+            <div class="row-flex">
+
+                <strong>
+                    EMI - ${formatMonth(selectedMonth)}
+                </strong>
+
+                <button
+                    class="btn-green"
+                    onclick="addEmi('${loan.id}')">
+                    + Add EMI
+                </button>
+
+            </div>
+
+
+            <p>
+                <span class="badge category">
+                    1–10: ${money(firstTotal)}
+                </span>
+
+                <span class="badge category">
+                    11–Month End: ${money(secondTotal)}
+                </span>
+            </p>
+        `;
+
+
+        if(emis.length===0){
+
+            html += `
+                <div class="empty">
+                    No EMI entered for this month.
+                </div>
+            `;
+
+        }else{
+
+            emis.forEach(emi => {
+
+                html += `
+
+                <div class="emi-row">
+
+                    <div class="row-flex">
+
+                        <div>
+
+                            <strong>
+                                ${formatDate(emi.date)}
+                            </strong>
+
+                            <div class="money">
+                                ${money(emi.amount)}
+                            </div>
+
+                            <span class="badge ${emi.paid ? "paid":"unpaid"}">
+                                ${emi.paid ? "PAID":"UNPAID"}
+                            </span>
+
+                            <span class="badge category">
+                                ${
+                                    getEmiGroup(emi.date)==="first"
+                                    ? "1–10"
+                                    : "11–Month End"
+                                }
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <button
+                                class="${emi.paid ? "btn-orange":"btn-green"}"
+                                onclick="toggleEmi('${loan.id}','${emi.id}')">
+
+                                ${emi.paid
+                                    ? "Mark Unpaid"
+                                    : "Mark Paid"}
+
+                            </button>
+
+                            <button
+                                class="btn-blue"
+                                onclick="editEmi('${loan.id}','${emi.id}')">
+                                Edit
+                            </button>
+
+                            <button
+                                class="btn-red"
+                                onclick="deleteEmi('${loan.id}','${emi.id}')">
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                `;
+
+            });
+
+        }
+
+
+        html += `</div>`;
+
+    });
+
+
+    container.innerHTML=html;
+
+}
+
+
+/* =========================
+   RENDER BILLS
+========================= */
+
+function renderBills(){
+
+    const container =
+        document.getElementById("billList");
+
+
+    if(bills.length===0){
+
+        container.innerHTML =
+            `<div class="empty">
+                No bills added yet.
+            </div>`;
+
+        return;
+
+    }
+
+
+    let html="";
+
+
+    bills.forEach(bill => {
+
+        const entry =
+            getBillEntry(bill);
+
+
+        html += `
+
+        <div class="bill-card">
+
+            <div class="row-flex">
+
+                <div>
+
+                    <h3>
+                        ${escapeHtml(bill.name)}
+                    </h3>
+
+                    <span class="badge category">
+                        ${escapeHtml(bill.category)}
+                    </span>
+
+                    ${
+                        bill.recurring
+                        ? `<span class="badge paid">
+                            Recurring
+                           </span>`
+                        : ""
                     }
-                );
+
+                </div>
+
+
+                <div>
+
+                    <button
+                        class="btn-orange"
+                        onclick="editBill('${bill.id}')">
+                        Edit
+                    </button>
+
+                    <button
+                        class="btn-red"
+                        onclick="deleteBill('${bill.id}')">
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <hr>
+
+
+            ${
+                entry
+                ?
+                `
+
+                <div class="bill-entry">
+
+                    <div class="row-flex">
+
+                        <div>
+
+                            <div class="small">
+                                Due Date
+                            </div>
+
+                            <strong>
+                                ${formatDate(entry.dueDate)}
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="small">
+                                Amount
+                            </div>
+
+                            <div class="money">
+                                ${money(entry.amount)}
+                            </div>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="badge ${entry.paid ? "paid":"unpaid"}">
+
+                                ${
+                                    entry.paid
+                                    ? "PAID"
+                                    : "UNPAID"
+                                }
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <button
+                            class="${entry.paid ? "btn-orange":"btn-green"}"
+                            onclick="toggleBill('${bill.id}','${entry.id}')">
+
+                            ${
+                                entry.paid
+                                ? "Mark Unpaid"
+                                : "Mark Paid"
+                            }
+
+                        </button>
+
+
+                        <button
+                            class="btn-blue"
+                            onclick="addBillEntry('${bill.id}')">
+                            Update This Month
+                        </button>
+
+
+                        <button
+                            class="btn-red"
+                            onclick="deleteBillEntry('${bill.id}','${entry.id}')">
+                            Delete Month
+                        </button>
+
+                    </div>
+
+                </div>
+
+                `
+                :
+                `
+
+                <div class="empty">
+
+                    No entry for
+                    <strong>${formatMonth(selectedMonth)}</strong>
+
+                    <br>
+
+                    <button
+                        class="btn-green"
+                        onclick="addBillEntry('${bill.id}')">
+                        + Add This Month
+                    </button>
+
+                </div>
+
+                `
+            }
+
+
+            ${
+                bill.notes
+                ?
+                `<p class="small">
+                    📝 ${escapeHtml(bill.notes)}
+                </p>`
+                :
+                ""
+            }
+
+        </div>
+
+        `;
+
+    });
+
+
+    container.innerHTML=html;
+
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function updateDashboard(){
+
+    let remaining=0;
+
+    loans.forEach(loan => {
+
+        remaining += Number(
+            loan.remainingAmount || 0
+        );
+
+    });
+
+
+    let firstEmi=0;
+    let secondEmi=0;
+    let totalEmi=0;
+    let unpaidEmi=0;
+
+
+    loans.forEach(loan => {
+
+        (loan.emis || []).forEach(emi => {
+
+            if(!emi.date.startsWith(selectedMonth)){
+                return;
+            }
+
+
+            const amount =
+                Number(emi.amount || 0);
+
+
+            totalEmi += amount;
+
+
+            if(!emi.paid){
+                unpaidEmi += amount;
+            }
+
+
+            if(getEmiGroup(emi.date)==="first"){
+                firstEmi += amount;
+            }else{
+                secondEmi += amount;
+            }
+
+        });
+
+    });
+
+
+    let totalBills=0;
+    let unpaidBills=0;
+    let paidBills=0;
+
+
+    bills.forEach(bill => {
+
+        const entry =
+            getBillEntry(bill);
+
+        if(!entry) return;
+
+
+        const amount =
+            Number(entry.amount || 0);
+
+
+        totalBills += amount;
+
+
+        if(entry.paid){
+            paidBills += amount;
+        }else{
+            unpaidBills += amount;
+        }
+
+    });
+
+
+    document.getElementById("statLoans").textContent =
+        money(loans.length);
+
+    document.getElementById("statRemaining").textContent =
+        money(remaining);
+
+    document.getElementById("statFirstEmi").textContent =
+        money(firstEmi);
+
+    document.getElementById("statSecondEmi").textContent =
+        money(secondEmi);
+
+    document.getElementById("statTotalEmi").textContent =
+        money(totalEmi);
+
+    document.getElementById("statBills").textContent =
+        money(totalBills);
+
+    document.getElementById("statUnpaidBills").textContent =
+        money(unpaidBills);
+
+    document.getElementById("statCommitment").textContent =
+        money(totalEmi + totalBills);
+
+}
+
+
+/* =========================
+   UPCOMING PAYMENTS
+========================= */
+
+function renderUpcoming(){
+
+    const container =
+        document.getElementById("upcomingList");
+
+
+    let items=[];
+
+
+    loans.forEach(loan => {
+
+        (loan.emis || []).forEach(emi => {
+
+            if(
+                emi.date.startsWith(selectedMonth)
+                &&
+                !emi.paid
+            ){
+
+                items.push({
+
+                    type:"EMI",
+
+                    name:loan.name,
+
+                    amount:emi.amount,
+
+                    date:emi.date
+
+                });
 
             }
 
+        });
+
+    });
+
+
+    bills.forEach(bill => {
+
+        const entry =
+            getBillEntry(bill);
+
+        if(
+            entry
+            &&
+            !entry.paid
+        ){
+
+            items.push({
+
+                type:"Bill",
+
+                name:bill.name,
+
+                amount:entry.amount,
+
+                date:entry.dueDate
+
+            });
+
         }
+
+    });
+
+
+    items.sort(
+        (a,b) =>
+        new Date(a.date) -
+        new Date(b.date)
     );
 
 
-    /*
-     * Always include selected month.
-     */
+    if(items.length===0){
 
-    if (selectedMonth) {
+        container.innerHTML =
+            `<div class="empty">
+                🎉 No unpaid payments for
+                ${formatMonth(selectedMonth)}
+            </div>`;
 
-        months.add(
-            selectedMonth
+        return;
+
+    }
+
+
+    let html="";
+
+
+    items.forEach(item => {
+
+        html += `
+
+        <div class="emi-row">
+
+            <div class="row-flex">
+
+                <div>
+
+                    <strong>
+                        ${escapeHtml(item.name)}
+                    </strong>
+
+                    <div class="small">
+                        ${item.type} •
+                        ${formatDate(item.date)}
+                    </div>
+
+                </div>
+
+
+                <div class="money">
+                    ${money(item.amount)}
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+
+    container.innerHTML=html;
+
+}
+
+
+/* =========================
+   CHART DATA
+========================= */
+
+function getChartMonths(){
+
+    const months=[];
+
+    const now =
+        new Date();
+
+    for(let i=11;i>=0;i--){
+
+        const d =
+            new Date(
+                now.getFullYear(),
+                now.getMonth()-i,
+                1
+            );
+
+        months.push(
+            d.toISOString().slice(0,7)
         );
 
     }
 
-
-    return Array.from(
-        months
-    ).sort();
+    return months;
 
 }
 
 
-/* =========================================================
-   REMAINING AMOUNT FOR A LOAN/MONTH
-========================================================= */
+function getLoanHistoricalTotal(month){
 
-function getHistoricalRemaining(
-    loan,
-    month
-) {
-
-    if (
-        loan.history &&
-        Object.prototype.hasOwnProperty.call(
-            loan.history,
-            month
-        )
-    ) {
-
-        return Number(
-            loan.history[month]
-        ) || 0;
-
-    }
+    let total=0;
 
 
-    /*
-     * If history isn't available for
-     * an older month, don't invent a
-     * historical balance.
-     */
+    loans.forEach(loan => {
 
-    return null;
-
-}
+        if(!loan.history){
+            return;
+        }
 
 
-/* =========================================================
-   EMI TOTAL FOR MONTH
-========================================================= */
-
-function getMonthEmiTotal(
-    loan,
-    month
-) {
-
-    let total = 0;
+        const keys =
+            Object.keys(loan.history)
+            .filter(k => k <= month)
+            .sort();
 
 
-    if (
-        !Array.isArray(
-            loan.emis
-        )
-    ) {
+        if(keys.length){
 
-        return 0;
+            const latest =
+                keys[keys.length-1];
 
-    }
+            total += Number(
+                loan.history[latest] || 0
+            );
 
+        }else{
 
-    loan.emis.forEach(
-        function(emi) {
-
-            if (
-                emi.date &&
-                emi.date.substring(
-                    0,
-                    7
-                ) ===
-                month
-            ) {
-
-                total +=
-                    Number(
-                        emi.amount
-                    ) || 0;
-
-            }
+            total += Number(
+                loan.remainingAmount || 0
+            );
 
         }
-    );
+
+    });
 
 
     return total;
@@ -2570,51 +2091,29 @@ function getMonthEmiTotal(
 }
 
 
-/* =========================================================
-   UNPAID EMI
-========================================================= */
+function getLoanEmiTotal(month){
 
-function getMonthUnpaid(
-    loan,
-    month
-) {
-
-    let total = 0;
+    let total=0;
 
 
-    if (
-        !Array.isArray(
-            loan.emis
-        )
-    ) {
+    loans.forEach(loan => {
 
-        return 0;
+        (loan.emis || []).forEach(emi => {
 
-    }
-
-
-    loan.emis.forEach(
-        function(emi) {
-
-            if (
+            if(
                 emi.date &&
-                emi.date.substring(
-                    0,
-                    7
-                ) ===
-                month &&
-                !emi.paid
-            ) {
+                emi.date.startsWith(month)
+            ){
 
-                total +=
-                    Number(
-                        emi.amount
-                    ) || 0;
+                total += Number(
+                    emi.amount || 0
+                );
 
             }
 
-        }
-    );
+        });
+
+    });
 
 
     return total;
@@ -2622,51 +2121,26 @@ function getMonthUnpaid(
 }
 
 
-/* =========================================================
-   PAID EMI
-========================================================= */
+function getBillTotal(month){
 
-function getMonthPaid(
-    loan,
-    month
-) {
-
-    let total = 0;
+    let total=0;
 
 
-    if (
-        !Array.isArray(
-            loan.emis
-        )
-    ) {
+    bills.forEach(bill => {
 
-        return 0;
+        (bill.entries || []).forEach(entry => {
 
-    }
+            if(entry.month === month){
 
-
-    loan.emis.forEach(
-        function(emi) {
-
-            if (
-                emi.date &&
-                emi.date.substring(
-                    0,
-                    7
-                ) ===
-                month &&
-                emi.paid
-            ) {
-
-                total +=
-                    Number(
-                        emi.amount
-                    ) || 0;
+                total += Number(
+                    entry.amount || 0
+                );
 
             }
 
-        }
-    );
+        });
+
+    });
 
 
     return total;
@@ -2674,73 +2148,184 @@ function getMonthPaid(
 }
 
 
-/* =========================================================
+function getPaidBillTotal(month){
+
+    let total=0;
+
+
+    bills.forEach(bill => {
+
+        (bill.entries || []).forEach(entry => {
+
+            if(
+                entry.month === month
+                &&
+                entry.paid
+            ){
+
+                total += Number(
+                    entry.amount || 0
+                );
+
+            }
+
+        });
+
+    });
+
+
+    return total;
+
+}
+
+
+function getUnpaidBillTotal(month){
+
+    let total=0;
+
+
+    bills.forEach(bill => {
+
+        (bill.entries || []).forEach(entry => {
+
+            if(
+                entry.month === month
+                &&
+                !entry.paid
+            ){
+
+                total += Number(
+                    entry.amount || 0
+                );
+
+            }
+
+        });
+
+    });
+
+
+    return total;
+
+}
+
+
+/* =========================
    DRAW CHART
-========================================================= */
+========================= */
 
-function drawLoanChart() {
+function drawChart(){
 
     const canvas =
-        document.getElementById(
-            "loanChart"
-        );
+        document.getElementById("chart");
 
-
-    if (!canvas) {
-
-        return;
-
-    }
-
-
-    const wrapper =
-        canvas.parentElement;
+    const ctx =
+        canvas.getContext("2d");
 
 
     const width =
-        Math.max(
-            wrapper.clientWidth,
-            650
-        );
-
+        canvas.clientWidth || 900;
 
     const height =
-        360;
-
-
-    const ratio =
-        window.devicePixelRatio ||
-        1;
+        420;
 
 
     canvas.width =
-        width * ratio;
+        width * devicePixelRatio;
 
     canvas.height =
-        height * ratio;
+        height * devicePixelRatio;
 
-    canvas.style.width =
-        width + "px";
-
-    canvas.style.height =
-        height + "px";
-
-
-    const ctx =
-        canvas.getContext(
-            "2d"
-        );
-
-
-    ctx.setTransform(
-        ratio,
-        0,
-        0,
-        ratio,
-        0,
-        0
+    ctx.scale(
+        devicePixelRatio,
+        devicePixelRatio
     );
 
+
+    const chartType =
+        document.getElementById("chartType").value;
+
+
+    const months =
+        getChartMonths();
+
+
+    let values=[];
+
+
+    months.forEach(month => {
+
+        if(chartType==="loan"){
+
+            values.push(
+                getLoanHistoricalTotal(month)
+            );
+
+        }
+
+        else if(chartType==="emi"){
+
+            values.push(
+                getLoanEmiTotal(month)
+            );
+
+        }
+
+        else if(chartType==="bills"){
+
+            values.push(
+                getBillTotal(month)
+            );
+
+        }
+
+        else if(chartType==="commitment"){
+
+            values.push(
+                getLoanEmiTotal(month)
+                +
+                getBillTotal(month)
+            );
+
+        }
+
+        else if(chartType==="paidBills"){
+
+            values.push(
+                getPaidBillTotal(month)
+            );
+
+        }
+
+        else if(chartType==="unpaidBills"){
+
+            values.push(
+                getUnpaidBillTotal(month)
+            );
+
+        }
+
+    });
+
+
+    drawLineChart(
+        ctx,
+        width,
+        height,
+        months,
+        values
+    );
+
+}
+
+
+function drawLineChart(
+    ctx,
+    width,
+    height,
+    months,
+    values
+){
 
     ctx.clearRect(
         0,
@@ -2750,535 +2335,58 @@ function drawLoanChart() {
     );
 
 
-    const chartType =
-        document.getElementById(
-            "chartType"
-        ).value;
-
-
-    const chartView =
-        document.getElementById(
-            "chartView"
-        ).value;
-
-
-    const months =
-        getChartMonths();
-
-
-    if (
-        months.length === 0
-    ) {
-
-        showChartInfo(
-            "No monthly data available yet. Add or edit a loan for each month to build your history."
-        );
-
-        return;
-
-    }
-
-
-    const labels =
-        months.map(
-            function(month) {
-
-                return formatShortMonth(
-                    month
-                );
-
-            }
-        );
-
-
-    let datasets = [];
-
-
-    /*
-     * REMAINING
-     */
-
-    if (
-        chartType ===
-        "remaining"
-    ) {
-
-        if (
-            chartView ===
-            "total"
-        ) {
-
-            const values = [];
-
-            months.forEach(
-                function(month) {
-
-                    let total = 0;
-
-                    let found = false;
-
-
-                    loans.forEach(
-                        function(loan) {
-
-                            const value =
-                                getHistoricalRemaining(
-                                    loan,
-                                    month
-                                );
-
-                            if (
-                                value !== null
-                            ) {
-
-                                total += value;
-
-                                found = true;
-
-                            }
-
-                        }
-                    );
-
-
-                    values.push(
-                        found
-                            ? total
-                            : null
-                    );
-
-                }
-            );
-
-
-            datasets.push({
-                label:
-                    "Total Remaining Loan",
-                values:
-                    values
-            });
-
-        } else {
-
-            loans.forEach(
-                function(loan) {
-
-                    const values =
-                        months.map(
-                            function(month) {
-
-                                return getHistoricalRemaining(
-                                    loan,
-                                    month
-                                );
-
-                            }
-                        );
-
-
-                    if (
-                        values.some(
-                            function(value) {
-                                return value !== null;
-                            }
-                        )
-                    ) {
-
-                        datasets.push({
-
-                            label:
-                                loan.name,
-
-                            values:
-                                values
-
-                        });
-
-                    }
-
-                }
-            );
-
-        }
-
-    }
-
-
-    /*
-     * EMI
-     */
-
-    if (
-        chartType ===
-        "emi"
-    ) {
-
-        if (
-            chartView ===
-            "total"
-        ) {
-
-            datasets.push({
-
-                label:
-                    "Total EMI",
-
-                values:
-                    months.map(
-                        function(month) {
-
-                            let total = 0;
-
-                            loans.forEach(
-                                function(loan) {
-
-                                    total +=
-                                        getMonthEmiTotal(
-                                            loan,
-                                            month
-                                        );
-
-                                }
-                            );
-
-                            return total;
-
-                        }
-                    )
-
-            });
-
-        } else {
-
-            loans.forEach(
-                function(loan) {
-
-                    datasets.push({
-
-                        label:
-                            loan.name,
-
-                        values:
-                            months.map(
-                                function(month) {
-
-                                    return getMonthEmiTotal(
-                                        loan,
-                                        month
-                                    );
-
-                                }
-                            )
-
-                    });
-
-                }
-            );
-
-        }
-
-    }
-
-
-    /*
-     * UNPAID
-     */
-
-    if (
-        chartType ===
-        "unpaid"
-    ) {
-
-        if (
-            chartView ===
-            "total"
-        ) {
-
-            datasets.push({
-
-                label:
-                    "Unpaid EMI",
-
-                values:
-                    months.map(
-                        function(month) {
-
-                            let total = 0;
-
-                            loans.forEach(
-                                function(loan) {
-
-                                    total +=
-                                        getMonthUnpaid(
-                                            loan,
-                                            month
-                                        );
-
-                                }
-                            );
-
-                            return total;
-
-                        }
-                    )
-
-            });
-
-        } else {
-
-            loans.forEach(
-                function(loan) {
-
-                    datasets.push({
-
-                        label:
-                            loan.name,
-
-                        values:
-                            months.map(
-                                function(month) {
-
-                                    return getMonthUnpaid(
-                                        loan,
-                                        month
-                                    );
-
-                                }
-                            )
-
-                    });
-
-                }
-            );
-
-        }
-
-    }
-
-
-    /*
-     * PAID
-     */
-
-    if (
-        chartType ===
-        "paid"
-    ) {
-
-        if (
-            chartView ===
-            "total"
-        ) {
-
-            datasets.push({
-
-                label:
-                    "Paid EMI",
-
-                values:
-                    months.map(
-                        function(month) {
-
-                            let total = 0;
-
-                            loans.forEach(
-                                function(loan) {
-
-                                    total +=
-                                        getMonthPaid(
-                                            loan,
-                                            month
-                                        );
-
-                                }
-                            );
-
-                            return total;
-
-                        }
-                    )
-
-            });
-
-        } else {
-
-            loans.forEach(
-                function(loan) {
-
-                    datasets.push({
-
-                        label:
-                            loan.name,
-
-                        values:
-                            months.map(
-                                function(month) {
-
-                                    return getMonthPaid(
-                                        loan,
-                                        month
-                                    );
-
-                                }
-                            )
-
-                    });
-
-                }
-            );
-
-        }
-
-    }
-
-
-    drawLineChart(
-        ctx,
-        width,
-        height,
-        labels,
-        datasets
-    );
-
-
-    updateChartInfo(
-        chartType,
-        chartView,
-        months,
-        datasets
-    );
-
-}
-
-
-/* =========================================================
-   DRAW LINE CHART
-========================================================= */
-
-function drawLineChart(
-    ctx,
-    width,
-    height,
-    labels,
-    datasets
-) {
-
-    const left =
-        65;
-
-    const right =
-        20;
-
-    const top =
-        30;
-
-    const bottom =
-        65;
+    const padding={
+        left:65,
+        right:20,
+        top:30,
+        bottom:55
+    };
 
 
     const chartWidth =
         width -
-        left -
-        right;
+        padding.left -
+        padding.right;
+
 
     const chartHeight =
         height -
-        top -
-        bottom;
+        padding.top -
+        padding.bottom;
 
 
-    let maxValue = 0;
-
-
-    datasets.forEach(
-        function(dataset) {
-
-            dataset.values.forEach(
-                function(value) {
-
-                    if (
-                        value !== null &&
-                        value > maxValue
-                    ) {
-
-                        maxValue =
-                            value;
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-    if (
-        maxValue <= 0
-    ) {
-
-        maxValue = 100;
-
-    }
+    const maxValue =
+        Math.max(
+            ...values,
+            1
+        );
 
 
     /*
-     * Give the chart some headroom.
-     */
+       Grid
+    */
 
-    maxValue *= 1.15;
-
-
-    /*
-     * Background
-     */
-
-    ctx.fillStyle =
-        "#ffffff";
-
-    ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-    );
+    ctx.strokeStyle="#ddd";
+    ctx.lineWidth=1;
 
 
-    /*
-     * Horizontal grid.
-     */
-
-    ctx.strokeStyle =
-        "#dddddd";
-
-    ctx.lineWidth =
-        1;
-
-
-    for (
-        let i = 0;
-        i <= 5;
-        i++
-    ) {
+    for(let i=0;i<=5;i++){
 
         const y =
-            top +
-            (
-                chartHeight *
-                i /
-                5
-            );
+            padding.top +
+            chartHeight -
+            (chartHeight * i / 5);
 
 
         ctx.beginPath();
 
         ctx.moveTo(
-            left,
+            padding.left,
             y
         );
 
         ctx.lineTo(
-            width - right,
+            width-padding.right,
             y
         );
 
@@ -3286,883 +2394,381 @@ function drawLineChart(
 
 
         const value =
-            maxValue *
-            (
-                1 -
-                i / 5
-            );
+            maxValue * i / 5;
 
 
-        ctx.fillStyle =
-            "#666666";
+        ctx.fillStyle="#555";
 
-        ctx.font =
-            "11px Arial";
-
-        ctx.textAlign =
-            "right";
+        ctx.font="11px Arial";
 
         ctx.fillText(
-            compactMoney(
-                value
-            ),
-            left - 8,
-            y + 4
+            money(value),
+            5,
+            y+4
         );
 
     }
 
 
     /*
-     * X axis.
-     */
+       Points
+    */
 
-    ctx.strokeStyle =
-        "#777777";
+    const points=[];
+
+
+    values.forEach((value,index)=>{
+
+        const x =
+            padding.left +
+            (index *
+            chartWidth /
+            (months.length-1));
+
+
+        const y =
+            padding.top +
+            chartHeight -
+            (value/maxValue)*chartHeight;
+
+
+        points.push({
+            x:x,
+            y:y
+        });
+
+    });
+
+
+    /*
+       Line
+    */
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        left,
-        top + chartHeight
-    );
 
-    ctx.lineTo(
-        width - right,
-        top + chartHeight
-    );
+    points.forEach((p,index)=>{
 
+        if(index===0){
+
+            ctx.moveTo(
+                p.x,
+                p.y
+            );
+
+        }else{
+
+            ctx.lineTo(
+                p.x,
+                p.y
+            );
+
+        }
+
+    });
+
+
+    ctx.strokeStyle="#172b4d";
+    ctx.lineWidth=3;
     ctx.stroke();
 
 
     /*
-     * Labels.
-     */
+       Dots
+    */
 
-    ctx.fillStyle =
-        "#555555";
+    points.forEach((p,index)=>{
 
-    ctx.font =
-        "11px Arial";
+        ctx.beginPath();
 
-    ctx.textAlign =
-        "center";
+        ctx.arc(
+            p.x,
+            p.y,
+            5,
+            0,
+            Math.PI*2
+        );
 
+        ctx.fillStyle="#172b4d";
 
-    labels.forEach(
-        function(label, index) {
-
-            const x =
-                getXPosition(
-                    index,
-                    labels.length,
-                    left,
-                    chartWidth
-                );
+        ctx.fill();
 
 
-            ctx.fillText(
-                label,
-                x,
-                height - 25
-            );
+        ctx.fillStyle="#333";
 
-        }
-    );
+        ctx.font="10px Arial";
+
+        ctx.textAlign="center";
+
+        ctx.fillText(
+            money(values[index]),
+            p.x,
+            p.y-10
+        );
+
+    });
 
 
     /*
-     * Draw each dataset.
-     */
+       Month labels
+    */
 
-    datasets.forEach(
-        function(dataset, datasetIndex) {
+    months.forEach((month,index)=>{
 
-            /*
-             * Canvas default colors.
-             * Different datasets get a
-             * different browser-safe color.
-             */
-
-            const colors = [
-                "#0d6efd",
-                "#198754",
-                "#dc3545",
-                "#fd7e14",
-                "#6f42c1",
-                "#20c997",
-                "#6c757d",
-                "#d63384"
-            ];
-
-            const color =
-                colors[
-                    datasetIndex %
-                    colors.length
-                ];
+        const x =
+            padding.left +
+            (index *
+            chartWidth /
+            (months.length-1));
 
 
-            ctx.strokeStyle =
-                color;
-
-            ctx.fillStyle =
-                color;
-
-            ctx.lineWidth =
-                3;
+        const d =
+            new Date(month+"-01");
 
 
-            let previousPoint =
-                null;
-
-
-            dataset.values.forEach(
-                function(value, index) {
-
-                    if (
-                        value === null
-                    ) {
-
-                        previousPoint =
-                            null;
-
-                        return;
-
-                    }
-
-
-                    const x =
-                        getXPosition(
-                            index,
-                            labels.length,
-                            left,
-                            chartWidth
-                        );
-
-
-                    const y =
-                        top +
-                        chartHeight -
-                        (
-                            value /
-                            maxValue
-                        ) *
-                        chartHeight;
-
-
-                    if (
-                        previousPoint
-                    ) {
-
-                        ctx.beginPath();
-
-                        ctx.moveTo(
-                            previousPoint.x,
-                            previousPoint.y
-                        );
-
-                        ctx.lineTo(
-                            x,
-                            y
-                        );
-
-                        ctx.stroke();
-
-                    }
-
-
-                    ctx.beginPath();
-
-                    ctx.arc(
-                        x,
-                        y,
-                        4,
-                        0,
-                        Math.PI * 2
-                    );
-
-                    ctx.fill();
-
-
-                    previousPoint = {
-
-                        x:
-                            x,
-
-                        y:
-                            y
-
-                    };
-
+        const label =
+            d.toLocaleDateString(
+                "en-IN",
+                {
+                    month:"short"
                 }
             );
 
-        }
-    );
 
+        ctx.fillStyle="#555";
 
-    /*
-     * Legend.
-     */
+        ctx.font="11px Arial";
 
-    let legendX =
-        left;
+        ctx.textAlign="center";
 
-    let legendY =
-        15;
-
-
-    datasets.forEach(
-        function(dataset, index) {
-
-            const colors = [
-                "#0d6efd",
-                "#198754",
-                "#dc3545",
-                "#fd7e14",
-                "#6f42c1",
-                "#20c997",
-                "#6c757d",
-                "#d63384"
-            ];
-
-            const color =
-                colors[
-                    index %
-                    colors.length
-                ];
-
-
-            ctx.fillStyle =
-                color;
-
-            ctx.fillRect(
-                legendX,
-                legendY - 8,
-                10,
-                10
-            );
-
-
-            ctx.fillStyle =
-                "#333333";
-
-            ctx.font =
-                "11px Arial";
-
-            ctx.textAlign =
-                "left";
-
-            ctx.fillText(
-                dataset.label,
-                legendX + 15,
-                legendY
-            );
-
-
-            legendX +=
-                ctx.measureText(
-                    dataset.label
-                ).width +
-                40;
-
-
-            /*
-             * Move to next row
-             * when legend becomes wide.
-             */
-
-            if (
-                legendX >
-                width - 120
-            ) {
-
-                legendX =
-                    left;
-
-                legendY +=
-                    18;
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   X POSITION
-========================================================= */
-
-function getXPosition(
-    index,
-    count,
-    left,
-    width
-) {
-
-    if (
-        count <= 1
-    ) {
-
-        return (
-            left +
-            width / 2
+        ctx.fillText(
+            label,
+            x,
+            height-25
         );
 
-    }
+    });
 
-    return (
-        left +
-        (
-            index /
-            (count - 1)
-        ) *
-        width
-    );
+
+    ctx.textAlign="left";
 
 }
 
 
-/* =========================================================
-   COMPACT MONEY
-========================================================= */
+/* =========================
+   BACKUP
+========================= */
 
-function compactMoney(
-    value
-) {
+function exportData(){
 
-    value =
-        Number(value) || 0;
+    const data = {
 
+        app:"NOVA Loan & Bills Tracker",
 
-    if (
-        value >= 10000000
-    ) {
-
-        return (
-            "₹" +
-            (
-                value /
-                10000000
-            ).toFixed(1) +
-            "Cr"
-        );
-
-    }
-
-
-    if (
-        value >= 100000
-    ) {
-
-        return (
-            "₹" +
-            (
-                value /
-                100000
-            ).toFixed(1) +
-            "L"
-        );
-
-    }
-
-
-    if (
-        value >= 1000
-    ) {
-
-        return (
-            "₹" +
-            (
-                value /
-                1000
-            ).toFixed(1) +
-            "K"
-        );
-
-    }
-
-
-    return (
-        "₹" +
-        Math.round(value)
-    );
-
-}
-
-
-/* =========================================================
-   SHORT MONTH
-========================================================= */
-
-function formatShortMonth(
-    month
-) {
-
-    const parts =
-        month.split("-");
-
-    if (
-        parts.length !== 2
-    ) {
-
-        return month;
-
-    }
-
-
-    const date =
-        new Date(
-            Number(parts[0]),
-            Number(parts[1]) - 1,
-            1
-        );
-
-
-    return date.toLocaleString(
-        "en-IN",
-        {
-            month: "short",
-            year: "numeric"
-        }
-    );
-
-}
-
-
-/* =========================================================
-   CHART INFO
-========================================================= */
-
-function showChartInfo(
-    text
-) {
-
-    document.getElementById(
-        "chartInfo"
-    ).textContent =
-        text;
-
-}
-
-
-function updateChartInfo(
-    chartType,
-    chartView,
-    months,
-    datasets
-) {
-
-    let title = "";
-
-
-    if (
-        chartType ===
-        "remaining"
-    ) {
-
-        title =
-            "📉 Remaining loan trend";
-
-    } else if (
-        chartType ===
-        "emi"
-    ) {
-
-        title =
-            "💳 Monthly EMI trend";
-
-    } else if (
-        chartType ===
-        "unpaid"
-    ) {
-
-        title =
-            "🔴 Unpaid EMI trend";
-
-    } else {
-
-        title =
-            "🟢 Paid EMI trend";
-
-    }
-
-
-    const view =
-        chartView ===
-        "total"
-            ? "All loans total"
-            : "Individual loans";
-
-
-    document.getElementById(
-        "chartInfo"
-    ).innerHTML =
-
-        "<strong>" +
-        title +
-        "</strong><br>" +
-
-        view +
-        " • " +
-
-        months.length +
-        " month(s) recorded.";
-
-}
-
-
-/* =========================================================
-   EXPORT
-========================================================= */
-
-function exportData() {
-
-    const backup = {
-
-        app:
-            "NOVA Loan Tracker",
-
-        version:
-            2,
+        version:3,
 
         exportedAt:
             new Date().toISOString(),
 
-        selectedMonth:
-            selectedMonth,
+        selectedMonth:selectedMonth,
 
-        loans:
-            loans
+        loans:loans,
+
+        bills:bills
 
     };
 
 
-    const json =
-        JSON.stringify(
-            backup,
-            null,
-            2
-        );
-
-
     const blob =
         new Blob(
-            [json],
+            [
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                )
+            ],
             {
-                type:
-                    "application/json"
+                type:"application/json"
             }
         );
 
 
     const url =
-        URL.createObjectURL(
-            blob
-        );
+        URL.createObjectURL(blob);
 
 
     const a =
-        document.createElement(
-            "a"
-        );
+        document.createElement("a");
 
 
-    const date =
-        new Date()
-            .toISOString()
-            .slice(
-                0,
-                10
-            );
-
-
-    a.href =
-        url;
+    a.href=url;
 
     a.download =
-        "loan-tracker-backup-" +
-        date +
+        "NOVA_Loan_Bills_Backup_" +
+        selectedMonth +
         ".json";
 
 
-    document.body.appendChild(
-        a
-    );
-
     a.click();
 
-    document.body.removeChild(
-        a
-    );
 
-    URL.revokeObjectURL(
-        url
-    );
-
-
-    showMessage(
-        "Backup file created."
-    );
+    URL.revokeObjectURL(url);
 
 }
 
 
-/* =========================================================
-   IMPORT
-========================================================= */
-
-function importData(
-    event
-) {
+function importData(event){
 
     const file =
         event.target.files[0];
 
-
-    if (!file) {
-
-        return;
-
-    }
+    if(!file) return;
 
 
     const reader =
         new FileReader();
 
 
-    reader.onload =
-        function(e) {
+    reader.onload=function(e){
 
-            try {
+        try{
 
-                const data =
-                    JSON.parse(
-                        e.target.result
-                    );
+            const data =
+                JSON.parse(e.target.result);
 
 
-                let importedLoans =
-                    null;
+            if(
+                !confirm(
+                    "Restore this backup?\n\n" +
+                    "Current data will be replaced."
+                )
+            ){
+
+                return;
+
+            }
 
 
-                if (
-                    Array.isArray(data)
-                ) {
+            if(
+                Array.isArray(data)
+            ){
 
-                    importedLoans =
-                        data;
+                loans=data;
+                bills=[];
 
-                } else if (
-                    Array.isArray(
-                        data.loans
-                    )
-                ) {
-
-                    importedLoans =
-                        data.loans;
-
-                }
-
-
-                if (
-                    !importedLoans
-                ) {
-
-                    throw new Error(
-                        "Invalid backup"
-                    );
-
-                }
-
-
-                if (
-                    !confirm(
-                        "Restore this backup? Current data will be replaced."
-                    )
-                ) {
-
-                    return;
-
-                }
-
+            }else{
 
                 loans =
-                    importedLoans;
+                    Array.isArray(data.loans)
+                    ? data.loans
+                    : [];
 
+                bills =
+                    Array.isArray(data.bills)
+                    ? data.bills
+                    : [];
 
-                loans.forEach(
-                    function(loan) {
-
-                        if (
-                            !Array.isArray(
-                                loan.emis
-                            )
-                        ) {
-
-                            loan.emis = [];
-
-                        }
-
-                        if (
-                            !loan.history
-                        ) {
-
-                            loan.history = {};
-
-                        }
-
-                    }
-                );
-
-
-                if (
-                    data.selectedMonth
-                ) {
+                if(data.selectedMonth){
 
                     selectedMonth =
                         data.selectedMonth;
 
-                    localStorage.setItem(
-                        "NOVA_SELECTED_MONTH",
-                        selectedMonth
-                    );
-
-                    document.getElementById(
-                        "selectedMonth"
-                    ).value =
-                        selectedMonth;
-
                 }
-
-
-                saveData();
-
-                renderAll();
-
-                drawLoanChart();
-
-                showMessage(
-                    "Data restored successfully!"
-                );
-
-
-            } catch(error) {
-
-                console.error(
-                    error
-                );
-
-                alert(
-                    "Invalid or damaged backup file."
-                );
 
             }
 
-        };
+
+            saveData();
+
+            document.getElementById(
+                "selectedMonth"
+            ).value=selectedMonth;
 
 
-    reader.readAsText(
-        file
-    );
+            renderAll();
+
+            alert(
+                "Backup restored successfully."
+            );
 
 
-    event.target.value =
-        "";
+        }catch(error){
 
-}
+            alert(
+                "Invalid backup file."
+            );
 
+        }
 
-/* =========================================================
-   DELETE ALL
-========================================================= */
-
-function clearAllData() {
-
-    if (
-        !confirm(
-            "WARNING!\n\nThis will delete ALL loans and EMI records.\n\nContinue?"
-        )
-    ) {
-
-        return;
-
-    }
+    };
 
 
-    if (
-        !confirm(
-            "Are you absolutely sure?"
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    loans = [];
-
-
-    saveData();
-
-    renderAll();
-
-    drawLoanChart();
-
-    showMessage(
-        "All data deleted."
-    );
+    reader.readAsText(file);
 
 }
 
 
-/* =========================================================
+/* =========================
    ESCAPE HTML
-========================================================= */
+========================= */
 
-function escapeHTML(
-    value
-) {
+function escapeHtml(text){
 
-    return String(
-        value || ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+    return String(text || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
 
-/* =========================================================
-   REDRAW WHEN SCREEN SIZE CHANGES
-========================================================= */
+/* =========================
+   RENDER ALL
+========================= */
 
-window.addEventListener(
-    "resize",
-    function() {
+function renderAll(){
 
-        drawLoanChart();
+    updateDashboard();
+
+    renderLoans();
+
+    renderBills();
+
+    renderUpcoming();
+
+    drawChart();
+
+}
+
+
+/* =========================
+   START APP
+========================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadData();
+
+
+        selectedMonth =
+            localStorage.getItem(
+                "NOVA_SELECTED_MONTH"
+            )
+            ||
+            currentMonth();
+
+
+        document.getElementById(
+            "selectedMonth"
+        ).value=selectedMonth;
+
+
+        renderAll();
 
     }
 );
